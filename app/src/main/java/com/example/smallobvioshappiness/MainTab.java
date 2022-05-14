@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,9 @@ public class MainTab extends Fragment {
 
         //리사이클러뷰 생성
         recyclerView = rootView.findViewById(R.id.post_RecyclerView);
+
+        //리사이클러뷰 사이 구분선
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
 
         //레이아웃매니저 설정
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

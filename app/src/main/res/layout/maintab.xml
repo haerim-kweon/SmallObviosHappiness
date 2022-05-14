@@ -2,25 +2,57 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:backgroundTint="@color/white">
+    android:background="@color/white">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="청파동(임시)"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="10pt">
-    </TextView>
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginVertical="15dp"
+            android:text="청파동"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="10pt">
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/imageButton18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_button_3" />
+
+        <Space
+            android:layout_width="170dp"
+            android:layout_height="match_parent">
+
+        </Space>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            app:srcCompat="@drawable/ic_notice"
+            ></ImageButton>
+
+    </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,51 +61,72 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="210dp"
                 android:background="@drawable/main_image"></ImageView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="30dp"
+
                 android:orientation="vertical">
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_1" />
+                        android:drawableTop="@drawable/ic_category_1"
+                        android:drawablePadding="10dp"
+                        android:text="식품"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"
 
-                    <ImageButton
+
+                        />
+
+                    <Button
                         android:id="@+id/imageButton7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_2" />
+                        android:drawableTop="@drawable/ic_category_2"
+                        android:drawablePadding="10dp"
+                        android:text="생활/주방용품"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_3" />
+                        android:drawableTop="@drawable/ic_category_3"
+                        android:drawablePadding="10dp"
+                        android:text="문구/오피스"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_4" />
+                        android:drawableTop="@drawable/ic_category_4"
+                        android:drawablePadding="10dp"
+                        android:text="의류/잡화"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
                 </LinearLayout>
 
@@ -82,48 +135,66 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_5" />
+                        android:drawableTop="@drawable/ic_category_5"
+                        android:drawablePadding="10dp"
+                        android:text="스포츠/레저"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_6" />
+                        android:drawableTop="@drawable/ic_category_6"
+                        android:drawablePadding="10dp"
+                        android:text="뷰티용품"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_7" />
+                        android:drawableTop="@drawable/ic_category_7"
+                        android:drawablePadding="10dp"
+                        android:text="식품"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_category_8" />
+                        android:drawableTop="@drawable/ic_category_8"
+                        android:drawablePadding="10dp"
+                        android:text="식품"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="#6B7583"/>
 
 
                 </LinearLayout>
             </LinearLayout>
 
-            <Space
+            <View
+                android:id="@+id/view2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:foregroundTint="#F9F9F9"></Space>
+                android:layout_height="30dp"
+                android:background="#F9FAF9"/>
 
             <TextView
+                android:paddingVertical="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
@@ -138,9 +209,16 @@
                 android:layout_height="800dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+
+
         </LinearLayout>
 
+
+
     </ScrollView>
+
+
 
 
 </LinearLayout>

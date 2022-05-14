@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //회원가입버튼 누르면 실행
-
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
