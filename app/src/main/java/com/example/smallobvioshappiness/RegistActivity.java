@@ -22,18 +22,18 @@ public class RegistActivity extends AppCompatActivity {
     private EditText email, password, password2, name, nickname, phone;
     private Button registButton;
 
-    protected void onCreat(Bundle saveInstancestate){
+    protected void onCreate(Bundle saveInstancestate){
         super.onCreate(saveInstancestate);
-        setContentView(R.layout.activity_regist);
+        setContentView(R.layout.signin_3);
 
-        email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
-        password2 = findViewById(R.id.editTextTextPassword2);
-        name = findViewById(R.id.editTextTextPersonName);
-        nickname = findViewById(R.id.editTextTextPersonNickname);
-        phone = findViewById(R.id.editTextTextPhoneNumber);
+        email = findViewById(R.id.editTextEmailAddress);
+        password = findViewById(R.id.editTextPassword);
+        password2 = findViewById(R.id.editTextPassword2);
+        name = findViewById(R.id.editTextPersonName);
+        nickname = findViewById(R.id.editTextPersonNickname);
+        phone = findViewById(R.id.editTextPhoneNumber);
 
-        registButton = findViewById(R.id.button4);
+        registButton = findViewById(R.id.btn_regist);
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

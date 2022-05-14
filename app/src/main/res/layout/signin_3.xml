@@ -34,7 +34,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/btn_regist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
                 app:layout_constraintVertical_bias="0.156" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/editTextEmailAddress"
                 android:layout_width="320dp"
                 android:layout_height="46dp"
                 android:ems="10"
@@ -91,7 +91,7 @@
                 app:layout_constraintVertical_bias="0.16" />
 
             <EditText
-                android:id="@+id/editTextTextPassword2"
+                android:id="@+id/editTextPassword"
                 android:layout_width="320dp"
                 android:layout_height="46dp"
                 android:ems="10"
@@ -134,7 +134,7 @@
                 app:layout_constraintVertical_bias="0.35" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/editTextPassword2"
                 android:layout_width="320dp"
                 android:layout_height="46dp"
                 android:ems="10"
@@ -177,7 +177,7 @@
                 app:layout_constraintVertical_bias="0.641" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editTextPersonName"
                 android:layout_width="320dp"
                 android:layout_height="43dp"
                 android:ems="10"
@@ -206,7 +206,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <EditText
-                android:id="@+id/editTextTextPersonNickname"
+                android:id="@+id/editTextPersonNickname"
                 android:layout_width="320dp"
                 android:layout_height="43dp"
                 android:ems="10"
@@ -236,7 +236,7 @@
 
 
             <EditText
-                android:id="@+id/editTextTextPhoneNumber"
+                android:id="@+id/editTextPhoneNumber"
                 android:layout_width="320dp"
                 android:layout_height="43dp"
                 android:ems="10"
@@ -368,7 +368,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btn_regist"
         android:layout_width="320dp"
         android:layout_height="54dp"
         android:layout_marginBottom="12dp"

@@ -21,14 +21,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
     private Button login, regist;
 
-    protected void onCreat(Bundle saveInstancestate){
+    protected void onCreate(Bundle saveInstancestate){
         super.onCreate(saveInstancestate);
         setContentView(R.layout.signin_2);
 
-        email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
-        login = findViewById(R.id.button2);
-        regist = findViewById(R.id.button3);
+        email = findViewById(R.id.login_EmailAddress);
+        password = findViewById(R.id.login_Password);
+        login = findViewById(R.id.btn_login);
+        regist = findViewById(R.id.btn_gotoregist);
 
 
         //회원가입버튼 누르면 실행
