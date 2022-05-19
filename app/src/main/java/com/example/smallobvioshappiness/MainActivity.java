@@ -1,6 +1,7 @@
 package com.example.smallobvioshappiness;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(3);
                         break;
                     case R.id.bottom_profile:
-                        setFrag(3);
+                        setFrag(4);
                         break;
                 }
                 return true;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         });
         frag1 = new MainTab();
         frag2 = new SearchTab();
-        frag3 = new AddTab();
+        //frag3 = new AddTab();
         frag4 = new ChatTab();
         frag5 = new ProfileTab();
         setFrag(0); //어플 실행 첫화면 = 캘린더탭
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainTab frag1;
     private SearchTab frag2;
-    private AddTab frag3;
+  //  private AddTab frag3;
     private ChatTab frag4;
     private ProfileTab frag5;
 
@@ -79,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.main_frame, frag3);
-                ft.commit();
+                Intent intent = new Intent(MainActivity.this, PostUploadActivity.class);
+                startActivity(intent);
                 break;
             case 3:
                 ft.replace(R.id.main_frame, frag4);

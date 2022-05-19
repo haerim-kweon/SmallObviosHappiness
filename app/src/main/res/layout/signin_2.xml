@@ -39,6 +39,7 @@
         android:ems="10"
         android:hint="이메일을 입력해주세요"
         android:inputType="textEmailAddress"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.446"
@@ -53,6 +54,7 @@
         android:ems="10"
         android:hint="비밀번호를 입력해주세요"
         android:inputType="textPassword"
+        app:passwordToggleEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"

@@ -13,7 +13,7 @@ public class LoginRequest extends StringRequest {
 
     //url 설정
 
-    final static private String URL = "dev.sbch.shop:9000/app/users/logIn";
+    final static private String URL = "http://dev.sbch.shop:9000/app/users/logIn";
     private Map<String, String> map;
     private String response;
 
@@ -23,8 +23,8 @@ public class LoginRequest extends StringRequest {
         super(Method.POST,URL, listener, null);
 
         map = new HashMap<>();
-        map.put("userEmail", userEmail);
-        map.put("userPassword", userPassword);
+        map.put("email", userEmail);
+        map.put("password", userPassword);
     }
     
     @Nullable

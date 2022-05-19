@@ -3,43 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="회원가입"
-        android:textColor="@color/black"
-        android:textSize="8pt"
-        android:textStyle="bold"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.06" />
+        app:layout_constraintVertical_bias="0.0">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView9"
-        app:layout_constraintHorizontal_bias="0.13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.047"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+
+            android:textColor="@color/black"
+            android:textSize="8pt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.511" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView9"
+            app:layout_constraintHorizontal_bias="0.13"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.518"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="550dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_regist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.56">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.31">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,6 +112,7 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="320dp"
                 android:layout_height="46dp"
+                android:drawableRight="@drawable/ic_invisible"
                 android:ems="10"
                 android:hint="비밀번호를 입력해주세요"
                 android:inputType="textPassword"
@@ -102,7 +121,8 @@
                 app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
-                app:layout_constraintVertical_bias="0.004" />
+                app:layout_constraintVertical_bias="0.004"
+                app:passwordToggleEnabled="true" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -110,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="사용할 수 없는 비밀번호입니다."
                 android:textColor="#FD4949"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.183"
@@ -137,6 +158,7 @@
                 android:id="@+id/editTextPassword2"
                 android:layout_width="320dp"
                 android:layout_height="46dp"
+                android:drawableRight="@drawable/ic_invisible"
                 android:ems="10"
                 android:hint="비밀번호를 입력해주세요"
                 android:inputType="textPassword"
@@ -145,7 +167,8 @@
                 app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
-                app:layout_constraintVertical_bias="0.251" />
+                app:layout_constraintVertical_bias="0.251"
+                app:passwordToggleEnabled="true" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -153,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:text="일치하지 않습니다."
                 android:textColor="#FD4949"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.14"
@@ -260,9 +284,9 @@
                 android:textStyle="bold"></TextView>
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal"
                 android:paddingLeft="-15dp">
 
@@ -271,30 +295,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    app:srcCompat="@drawable/ic_check_circle" />
+                    app:srcCompat="@drawable/ic_check_circle"
+                    app:tint="@color/purple_700" />
 
                 <TextView
                     android:id="@+id/textView15"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="  전체 동의합니다."
                     android:gravity="center_vertical"
+                    android:text="  전체 동의합니다."
                     android:textColor="@color/black"
-                    android:textSize="7pt"
-                    />
+                    android:textSize="7pt" />
             </LinearLayout>
-
-
-            <androidx.constraintlayout.widget.Barrier
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:barrierDirection="top" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="-15dp">
+
                 <ImageButton
                     android:id="@+id/imageButton3"
                     android:layout_width="wrap_content"
@@ -306,11 +325,10 @@
                     android:id="@+id/textView16"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="이용 약관에 동의합니다. (필수)"
                     android:gravity="center_vertical"
+                    android:text="이용 약관에 동의합니다. (필수)"
                     android:textColor="@color/black"
-                    android:textSize="6pt"
-                    />
+                    android:textSize="6pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -318,6 +336,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="-15dp">
+
                 <ImageButton
                     android:id="@+id/imageButton4"
                     android:layout_width="wrap_content"
@@ -330,11 +349,10 @@
                     android:id="@+id/textView17"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="개인정보 수집 및 이름에  동의 합니다. (필수)"
                     android:gravity="center_vertical"
+                    android:text="개인정보 수집 및 이름에  동의 합니다. (필수)"
                     android:textColor="@color/black"
-                    android:textSize="6pt"
-                    />
+                    android:textSize="6pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -342,6 +360,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="-15dp">
+
                 <ImageButton
                     android:id="@+id/imageButton5"
                     android:layout_width="wrap_content"
@@ -353,17 +372,16 @@
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="만 14세 이상입니다. (필수)"
                     android:gravity="center_vertical"
+                    android:text="만 14세 이상입니다. (필수)"
                     android:textColor="@color/black"
-                    android:textSize="6pt"
-                    />
+                    android:textSize="6pt" />
 
             </LinearLayout>
+
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                ></Space>
+                android:layout_height="200dp"></Space>
         </LinearLayout>
     </ScrollView>
 
@@ -371,16 +389,17 @@
         android:id="@+id/btn_regist"
         android:layout_width="320dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="12dp"
-        android:textColor="@color/white"
-        android:textSize="7pt"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/ic_button_1"
         android:text="가입하기"
+        android:textColor="@color/white"
+        android:textSize="7pt"
         android:textStyle="bold"
         app:cornerRadius="10dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
 
