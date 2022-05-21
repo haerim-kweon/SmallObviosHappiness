@@ -13,14 +13,14 @@ public class LoginRequest extends StringRequest {
 
     //url 설정
 
-    final static private String URL = "http://dev.sbch.shop:9000/app/users/logIn";
+    final static private String URL = "https://dev.sbch.shop:9000/app/users/logIn";
     private Map<String, String> map;
     private String response;
 
 
 
     public LoginRequest(String userEmail, String userPassword, Response.Listener<String> listener) {
-        super(Method.POST,URL, listener, null);
+        super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("email", userEmail);
@@ -30,8 +30,12 @@ public class LoginRequest extends StringRequest {
     @Nullable
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
         return map;
     }
+
+
 
 }
 

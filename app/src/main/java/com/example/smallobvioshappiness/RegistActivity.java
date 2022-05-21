@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 public class RegistActivity extends AppCompatActivity {
 
 
+    MemberDTO dto;
     private TextView passwordCheck;
     private EditText email, password, password2, name, nickname, phone;
     private Button registButton;
@@ -48,6 +50,12 @@ public class RegistActivity extends AppCompatActivity {
 
         btn_Back = findViewById(R.id.imageButton);
 
+
+        dto=new MemberDTO();
+
+
+
+
         //뒤로가기 버튼 클릭시 액티비티 종료
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +75,9 @@ public class RegistActivity extends AppCompatActivity {
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Log.d("text", email.getText().toString());
+
                 //입력된 정보 가져오기
                 String userEmail = email.getText().toString();
                 String userPassword = password.getText().toString();
@@ -86,10 +97,12 @@ public class RegistActivity extends AppCompatActivity {
                 }
 */
 
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.d("text2", "aaa");
                             // 스트링을 json오브젝트 형태로 전송
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("isSuccess");
@@ -117,8 +130,15 @@ public class RegistActivity extends AppCompatActivity {
 
                 //Volley 라이브러리, 서버통신
                 RegisterRequest registerRequest = new RegisterRequest(userEmail,  userName, userPhone, userPassword, userPassword2,  userNickname,  responseListener);
+
+                Log.d("text", "aaa");
                 RequestQueue queue = Volley.newRequestQueue(RegistActivity.this);
+
+                Log.d("text", "ccc");
+
                 queue.add(registerRequest);
+
+                Log.d("text", "eee");
 
 
             }

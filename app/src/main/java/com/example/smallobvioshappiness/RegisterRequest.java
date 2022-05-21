@@ -22,17 +22,19 @@ public class RegisterRequest extends StringRequest {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("userEmail", userEmail);
-        map.put("userPassword", userPassword);
-        map.put("userPassword2", userPassword2);
-        map.put("userName", userName);
-        map.put("userNickname", userNickname);
+        map.put("email", userEmail);
+        map.put("password", userPassword);
+        map.put("password2", userPassword2);
+        map.put("name", userName);
+        map.put("nick", userNickname);
         map.put("phone",phone);
     }
 
     @Nullable
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
         return map;
     }
 
