@@ -36,15 +36,9 @@ public class ChatTab extends Fragment {
         chat.add(new Chat("눈송이", "안녕하세요"));
         chat.add(new Chat("눈송이", "안녕하세요"));
         chat.add(new Chat("눈송이", "안녕하세요"));
-        chat.add(new Chat("눈송이", "안녕하세요"));
-        chat.add(new Chat("눈송이", "안녕하세요"));
-        chat.add(new Chat("눈송이", "안녕하세요"));
-        chat.add(new Chat("눈송이", "안녕하세요"));
-        chat.add(new Chat("눈송이", "안녕하세요"));
-        chat.add(new Chat("눈송이", "안녕하세요"));
 
         //리사이클러뷰 생성
-        recyclerView = rootView.findViewById(R.id.chat_recyclerview);
+        recyclerView = rootView.findViewById(R.id.chattab_recyclerview);
 
         //리사이클러뷰 사이 구분선
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));

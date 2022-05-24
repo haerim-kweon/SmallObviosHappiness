@@ -10,21 +10,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText email, password;
     private Button login, regist;
+    RequestQueue queue;
 
     protected void onCreate(Bundle saveInstancestate){
         super.onCreate(saveInstancestate);
+        queue = Volley.newRequestQueue(this);
+
         setContentView(R.layout.signin_2);
 
         email = findViewById(R.id.login_EmailAddress);
@@ -39,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
+                Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
                 startActivity(intent);
             }
         });
@@ -52,53 +67,79 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("text", "a");
                 String userEmail = email.getText().toString();
                 String userPassword = password.getText().toString();
+                Map<String, String>  params = new HashMap<>();
 
-                Response.Listener<String> response_listener = new Response.Listener<String>() {
+                params.put("email", userEmail);
+                params.put("password",userPassword);
+
+
+                JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.POST,
+                        "http://dev.sbch.shop:9000/app/users/logIn", new JSONObject(params),
+                        new Response.Listener<JSONObject>(){
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("text", "결과"+ response.toString());
+                                boolean success = false;
+                                try {
+                                    success = response.getBoolean("isSuccess");
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                if(success){
+                                    try {
+                                        Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+
+                                }
+                                //회원가입 실패
+                                else {
+                                    try {
+                                        Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    return;
+                                }
+                            }
+                        },
+                        new Response.ErrorListener(){
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                NetworkResponse rep = error.networkResponse;
+                                if(error instanceof ServerError && rep != null){
+                                    try{
+                                        String r = new String(rep.data, HttpHeaderParser.parseCharset(rep.headers, "utf-8"));
+                                        JSONObject jo = new JSONObject(r);
+                                        Log.d("text", "결과"+jo.toString());
+                                    }catch(UnsupportedEncodingException | JSONException e1){
+                                        e1.printStackTrace();
+                                    }
+                                }
+                                Log.d("text", "ERROR: "+error.getMessage());
+                            }
+                        }
+                )
+                {
 
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            Log.d("text", "b");
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("isSuccess");
+                    public Map<String, String> getHeaders() throws AuthFailureError{
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Content-Type", "application/json;charset=utf-8");
 
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("result");
-                            //로그인 성공
-                            if(success){
-                                Log.d("text", "c");
-                                String userEmail = jsonArray.getString(0);
-                                String userPassword = jsonArray.getString(1);
-
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("email", userEmail);
-                                intent.putExtra("password", userPassword);
-                                startActivity(intent);
-
-                            }
-                            //로그인 실패
-                            else {
-                                Log.d("text", "d");
-                                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-
-                        } catch (JSONException e) {
-                            Log.d("text", "e");
-                            e.printStackTrace();
-                        }
-
+                        return headers;
                     }
-                };
 
-                Log.d("text", "1");
-                LoginRequest loginRequest = new LoginRequest(userEmail, userPassword, response_listener);
-                Log.d("text", "2");
-                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                Log.d("text", "3");
-                queue.add(loginRequest);
-                Log.d("text", "4");
+                };
+                queue.add(joRequest);
+                //
+
             }
         });
     }

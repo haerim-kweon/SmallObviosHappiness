@@ -13,13 +13,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistActivity extends AppCompatActivity {
 
@@ -29,9 +41,11 @@ public class RegistActivity extends AppCompatActivity {
     private EditText email, password, password2, name, nickname, phone;
     private Button registButton;
     private ImageButton btn_Back, btn_agreeAll, btn_agree2, btn_agree3, btn_agree4;
-
+    RequestQueue queue;
     protected void onCreate(Bundle saveInstancestate){
         super.onCreate(saveInstancestate);
+        queue = Volley.newRequestQueue(this);
+
         setContentView(R.layout.signin_3);
 
         email = findViewById(R.id.editTextEmailAddress);
@@ -52,9 +66,6 @@ public class RegistActivity extends AppCompatActivity {
 
 
         dto=new MemberDTO();
-
-
-
 
         //뒤로가기 버튼 클릭시 액티비티 종료
         btn_Back.setOnClickListener(new View.OnClickListener() {
@@ -85,61 +96,72 @@ public class RegistActivity extends AppCompatActivity {
                 String userName = name.getText().toString();
                 String userNickname = nickname.getText().toString();
                 String userPhone = phone.getText().toString();
+                Map<String, String>  params = new HashMap<>();
 
+                // params.put("Content-type", "application/json;charset=utf-8");
+                params.put("email", userEmail);
+                params.put("name", userName);
+                params.put("password",userPassword);
+                params.put("password2",userPassword2);
+                params.put( "phone", userPhone);
+                params.put("nick",userNickname);
 
-                /*
-                //비밀번호 확인
-                if(userPassword.equals(userPassword2) == false && userPassword2.isEmpty()==false){
-                    passwordCheck.setVisibility(View.VISIBLE);
-                }
-                else if(userPassword.equals(userPassword2)) {
-                    passwordCheck.setText("사용할 수 있는 비밀번호입니다");
-                }
-*/
+                JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.POST,
+                        "http://dev.sbch.shop:9000/app/users", new JSONObject(params),
+                        new Response.Listener<JSONObject>(){
 
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("text", "결과"+ response.toString());
+                                boolean success = false;
+                                try {
+                                    success = response.getBoolean("isSuccess");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                if(success){
+                                    Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(RegistActivity.this, LoginActivity.class);
+                                    startActivity(intent);
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            Log.d("text2", "aaa");
-                            // 스트링을 json오브젝트 형태로 전송
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("isSuccess");
-
-
-                            //회원가입 성공
-                            if(success){
-                                Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegistActivity.this, Signin_4.class);
-
+                                }
+                                //회원가입 실패
+                                else {
+                                    Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                             }
-                            //회원가입 실패
-                            else {
-                                Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
-                                return;
+                        },
+                        new Response.ErrorListener(){
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                NetworkResponse rep = error.networkResponse;
+                                if(error instanceof ServerError && rep != null){
+                                    try{
+                                        String r = new String(rep.data, HttpHeaderParser.parseCharset(rep.headers, "utf-8"));
+                                        JSONObject jo = new JSONObject(r);
+                                        Log.d("text", "결과"+jo.toString());
+                                    }catch(UnsupportedEncodingException | JSONException e1){
+                                        e1.printStackTrace();
+                                    }
+                                }
+                                Log.d("text", "ERROR: "+error.getMessage());
                             }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                        )
+                {
 
+                   @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError{
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Content-Type", "application/json;charset=utf-8");
+
+                        return headers;
                     }
+
                 };
-
-                //Volley 라이브러리, 서버통신
-                RegisterRequest registerRequest = new RegisterRequest(userEmail,  userName, userPhone, userPassword, userPassword2,  userNickname,  responseListener);
-
-                Log.d("text", "aaa");
-                RequestQueue queue = Volley.newRequestQueue(RegistActivity.this);
-
-                Log.d("text", "ccc");
-
-                queue.add(registerRequest);
-
-                Log.d("text", "eee");
-
+                queue.add(joRequest);
 
             }
         });

@@ -17,30 +17,29 @@
         android:theme="@style/Theme.SmallObviosHappiness"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".StartActivity"
+            android:name=".LocationActivity"
             >
-        </activity>
 
+        </activity>
+        <activity
+            android:name=".NoticeActivity"
+            android:exported="false" />
+        <activity android:name=".StartActivity" />
         <activity android:name=".PostUploadActivity" />
         <activity android:name=".RegistActivity" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
+            >
 
+        </activity>
+        <activity android:name=".MainActivity"
+            android:exported="true" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity android:name=".MainActivity"
-           >
-
-        </activity>
-
-
-        <!-- 네이티브 앱 키 추가 -->
+        </activity> <!-- 네이티브 앱 키 추가 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="d9bcaebe104fac0f3fef7c9cf1e52dd4" />

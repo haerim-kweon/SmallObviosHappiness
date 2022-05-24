@@ -1,9 +1,12 @@
 package com.example.smallobvioshappiness;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,18 +22,31 @@ public class MainTab extends Fragment {
     RecyclerView recyclerView;
     PostAdapter adapter;
     ArrayList<Post> post;
+    ImageButton notice;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.maintab, container, false);
+        View rootView = inflater.inflate(R.layout.maintab, container, false);
+        Log.d("text", "a");
+        notice = rootView.findViewById(R.id.gotonotice);
+        Log.d("text", "b");
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("text", "c");
+                Intent intent = new Intent(getContext(), NoticeActivity.class);
+                Log.d("text", "d");
+                startActivity(intent);
+            }
+        });
 
         initUI(rootView);
         return rootView;
     }
 
-    public void initUI(ViewGroup rootView){
+    public void initUI(View rootView){
         post = new ArrayList<>();
         post.add(new Post("인테리어 사진 액자 공구", "잡화", "1분전", "21,000원"));
         post.add(new Post("인테리어 사진 액자 공구", "잡화", "1분전", "21,000원"));
