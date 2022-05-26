@@ -2,7 +2,9 @@ package com.example.smallobvioshappiness;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences pref = getSharedPreferences("jwt",0);
+
+        Log.d("text2", pref.getString("jwt",""));
         //하단네비게이션바
         //하단네비게이션바 화면 보여주기
         bottomNavigationView = findViewById(R.id.bottomNavi);

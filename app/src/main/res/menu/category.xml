@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="식품"
+        />
+    <item
+        android:title="생활용품"
+        />
+    <item
+        android:title="주방용품"
+        />
+    <item
+        android:title="문구/오피스"
+        />
+    <item
+        android:title="스포츠/레저"
+        />
+    <item
+        android:title="뷰티"
+        />
+    <item
+        android:title="배달음식"
+        />
+    <item
+        android:title="반려동물용품"
+        />
+    <item
+        android:title="의류/잡화"
+        />
+    <item
+        android:title="유아동"
+        />
+
+</menu>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/notice_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알림내용"
+        android:textColor="#6B7583"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.235">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/notice_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공구 게시물 제목"
+        android:textColor="@color/black"
+        android:textSize="8.5pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.755">
+
+    </TextView>
+
+    <ImageButton
+        android:id="@+id/btn_noticetopost"
+        android:layout_width="38dp"
+        android:layout_height="47dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521"
+        app:srcCompat="@drawable/ic_vector_175__stroke_" />
+</androidx.constraintlayout.widget.ConstraintLayout>

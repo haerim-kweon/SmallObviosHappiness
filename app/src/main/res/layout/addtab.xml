@@ -64,18 +64,34 @@
                 android:hint="제목" />
 
             <EditText
-                android:id="@+id/editTextCategory"
+                android:id="@+id/productName"
                 android:layout_width="320dp"
                 android:layout_height="46dp"
                 android:layout_marginVertical="10dp"
                 android:ems="10"
-                android:hint="카테고리"
+                android:hint="상품 이름" />
+
+            <TextView
+                android:id="@+id/add_Category"
+                android:layout_width="320dp"
+                android:layout_height="46dp"
+                android:layout_marginVertical="10dp"
+                android:gravity="center_vertical"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:text="카테고리"
+                android:textColor="@color/black"
+                android:textSize="7.5pt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
-                app:layout_constraintVertical_bias="0.004" />
+                app:layout_constraintVertical_bias="0.004"
+                android:drawableRight="@drawable/ic_vector_175__stroke_"
+                android:clickable="true"
+                />
+
 
 
             <EditText
@@ -84,7 +100,7 @@
                 android:layout_height="46dp"
                 android:layout_marginVertical="10dp"
                 android:ems="10"
-                android:hint="가격"
+                android:hint="가격 입력"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
@@ -107,29 +123,83 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <EditText
-                android:id="@+id/editTextPeriod"
+
+            <TextView
+                android:id="@+id/add_Period"
                 android:layout_width="320dp"
                 android:layout_height="43dp"
                 android:layout_marginVertical="10dp"
                 android:ems="10"
-                android:hint="모집 기간"
-
+                android:gravity="center_vertical"
+                android:text="모집 기간"
+                android:textColor="@color/black"
+                android:textSize="7.5pt"
+                android:paddingLeft="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_vector_175__stroke_"/>
 
+            <TextView
+                android:id="@+id/add_Time"
+                android:layout_width="320dp"
+                android:layout_height="43dp"
+                android:layout_marginVertical="10dp"
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:text="마감 시간"
+                android:textColor="@color/black"
+                android:textSize="7.5pt"
+                android:paddingLeft="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.461"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:layout_constraintVertical_bias="0.0"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_vector_175__stroke_"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginVertical="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/location1"
+                    android:layout_width="80dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_btn_location"
+                    android:textColor="@color/white"
+                    android:text="동네1"
+                    >
+                </Button>
+
+                <Button
+                    android:id="@+id/location2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="80dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_btn_location"
+                    android:textColor="@color/white"
+                    android:text="동네2"
+                    >
+                </Button>
+            </LinearLayout>
             <EditText
                 android:id="@+id/editTextTextExplain"
                 android:layout_width="320dp"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:ems="10"
                 android:hint="(10자 이상) 구체적인 진행방법, 결제방식, 상품설명등을
 자유롭게 서술해주세요. 음란물, 욕설 게시는 신고 및 제재의 대상이 될 수 있습니다."
+                android:gravity="top"
+                android:paddingTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
@@ -141,7 +211,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/add_post"
         android:layout_width="320dp"
         android:layout_height="54dp"
         android:background="@drawable/ic_button_1"

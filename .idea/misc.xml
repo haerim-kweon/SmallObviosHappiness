@@ -5,11 +5,15 @@
       <map>
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable-v24/ic_baseline_account_circle_24.xml" value="0.2185" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable-v24/ic_baseline_add_circle_24.xml" value="0.2145" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable-v24/ic_baseline_question_answer_24.xml" value="0.1635" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable-v24/ic_baseline_search_24.xml" value="0.1635" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.249" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/category.xml" value="0.1295" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.2145" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_btn_location.xml" value="0.1635" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_button_1.xml" value="0.1295" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_button_2.xml" value="0.2475" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_button_3.xml" value="0.1635" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_category_1.xml" value="0.1295" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_category_2.xml" value="0.249" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_category_3.xml" value="0.249" />
@@ -22,8 +26,14 @@
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_check.xml" value="0.14" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_check_circle.xml" value="0.2195" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_frame.xml" value="0.1295" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_interest_state_0.xml" value="0.1635" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_interest_state_0_.xml" value="0.1635" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2145" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_notice.xml" value="0.1635" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_vector.xml" value="0.1295" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_vector_15.xml" value="0.1635" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_vector_175__stroke_.xml" value="0.1635" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/drawable/ic_visible.xml" value="0.1635" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/activity_login.xml" value="0.2617753623188406" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/activity_main.xml" value="0.213768115942029" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/activity_notice.xml" value="0.2749094202898551" />
@@ -39,7 +49,7 @@
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/notice.xml" value="0.2749094202898551" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/noticepage.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/person_profile.xml" value="0.2617753623188406" />
-        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/post.xml" value="0.22" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/post.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/post_detail.xml" value="0.22" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/post_small.xml" value="0.213768115942029" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/profileTab.xml" value="0.1" />
@@ -55,6 +65,7 @@
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/signin_5.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/layout/signin_fin.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/menu/bottom_menu.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/menu/category.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2145" />
         <entry key="..\:/Users/khael/AndroidStudioProjects/SmallObviosHappiness/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2145" />
       </map>

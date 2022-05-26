@@ -3,6 +3,7 @@ package com.example.smallobvioshappiness;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText email, password;
     private Button login, regist;
+
     RequestQueue queue;
 
     protected void onCreate(Bundle saveInstancestate){
@@ -48,13 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.btn_login);
         regist = findViewById(R.id.btn_gotoregist);
 
-
         //회원가입버튼 누르면 실행
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,6 +91,15 @@ public class LoginActivity extends AppCompatActivity {
                                 if(success){
                                     try {
                                         Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                                        JSONObject result = response.getJSONObject("result");
+                                        String jwt = result.getString("jwt");
+
+                                        SharedPreferences pref = getSharedPreferences("jwt",0);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("jwt", jwt );
+                                        editor.commit();
+                                        Log.d("text", pref.getString("jwt",""));
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

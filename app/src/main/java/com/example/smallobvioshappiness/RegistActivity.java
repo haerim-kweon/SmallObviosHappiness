@@ -35,13 +35,12 @@ import java.util.Map;
 
 public class RegistActivity extends AppCompatActivity {
 
-
-    MemberDTO dto;
     private TextView passwordCheck;
     private EditText email, password, password2, name, nickname, phone;
     private Button registButton;
     private ImageButton btn_Back, btn_agreeAll, btn_agree2, btn_agree3, btn_agree4;
     RequestQueue queue;
+
     protected void onCreate(Bundle saveInstancestate){
         super.onCreate(saveInstancestate);
         queue = Volley.newRequestQueue(this);
@@ -65,8 +64,6 @@ public class RegistActivity extends AppCompatActivity {
         btn_Back = findViewById(R.id.imageButton);
 
 
-        dto=new MemberDTO();
-
         //뒤로가기 버튼 클릭시 액티비티 종료
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +83,6 @@ public class RegistActivity extends AppCompatActivity {
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.d("text", email.getText().toString());
 
                 //입력된 정보 가져오기
                 String userEmail = email.getText().toString();
@@ -132,6 +127,7 @@ public class RegistActivity extends AppCompatActivity {
                                 }
                             }
                         },
+
                         new Response.ErrorListener(){
 
                             @Override

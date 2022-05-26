@@ -3,6 +3,7 @@ package com.example.smallobvioshappiness;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,12 +35,22 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     //데이터를 레이아웃에 어떻게 넣어줄지
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
-        Post community_post = posts.get(i);
+        Post post = posts.get(i);
 
-        itemViewHolder.category.setText(community_post.getCategory());
-        itemViewHolder.title.setText(community_post.getTitle());
-        itemViewHolder.time.setText(community_post.getTime());
-        itemViewHolder.price.setText(community_post.getPrice());
+        itemViewHolder.category.setText(post.getCategory());
+        itemViewHolder.title.setText(post.getTitle());
+        itemViewHolder.time.setText(post.getTime());
+        itemViewHolder.price.setText(post.getPrice());
+        itemViewHolder.interest_num.setTextColor(post.getPrice());
+       // itemViewHolder.interest_state.set
+        if(post.getInterest_state()==1){
+
+        }
+        else {
+
+        }
+
+        //itemViewHolder.interest_state.setImageDrawable(post.getInterest_state());
 
 
     }
@@ -47,8 +58,12 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     class ItemViewHolder extends RecyclerView.ViewHolder{
         private TextView category;
         private TextView title;
-        private TextView time;
         private TextView price;
+        private ImageButton interest_state;
+        private TextView interest_num;
+        private TextView time;
+
+
 
         public ItemViewHolder(@NonNull View itemView){
             super(itemView);
@@ -56,6 +71,8 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
             title = itemView.findViewById(R.id.posttitle);
             time = itemView.findViewById(R.id.posttime);
             price = itemView.findViewById(R.id.postprice);
+            interest_state = itemView.findViewById(R.id.interest_state);
+            interest_num = itemView.findViewById(R.id.interext_num);
         }
     }
 
