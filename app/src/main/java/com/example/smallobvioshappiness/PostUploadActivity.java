@@ -101,7 +101,63 @@ public class PostUploadActivity extends AppCompatActivity {
         period = findViewById(R.id.add_Period);
         time = findViewById(R.id.add_Time);
 
+        location1 = findViewById(R.id.location1);
+        location2 = findViewById(R.id.location2);
         SharedPreferences pref = getSharedPreferences("jwt",0);
+
+//
+
+        JsonObjectRequest locationRequest = new JsonObjectRequest(Request.Method.GET, "http://dev.sbch.shop:9000/app/posts/location", null,
+                new Response.Listener<JSONObject>(){
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("text1", response.toString());
+                            JSONObject result = response.getJSONObject("result");
+                            Log.d("text", "3");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse rep = error.networkResponse;
+                        if(error instanceof ServerError && rep != null){
+                            try{
+                                String r = new String(rep.data, HttpHeaderParser.parseCharset(rep.headers, "utf-8"));
+                                JSONObject jo = new JSONObject(r);
+                                Log.d("text", "결과"+jo.toString());
+                            }catch(UnsupportedEncodingException | JSONException e1){
+                                e1.printStackTrace();
+                            }
+                        }
+                        Log.d("text", "ERROR: "+error.getMessage());
+                    }
+                }
+        )
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json;charset=utf-8");
+                headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
+                return headers;
+            }
+
+        };
+
+
+        queue.add(locationRequest);
+
+
+        //
 
 
 
@@ -130,28 +186,28 @@ public class PostUploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final TextView et_time = findViewById(R.id.add_Time);
                 et_time.setOnClickListener(new View.OnClickListener() {
-                                               @Override
-                                               public void onClick(View v) {
-                                                   Calendar mcurrentTime = Calendar.getInstance();
-                                                   int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                                                   int minute = mcurrentTime.get(Calendar.MINUTE);
-                                                   TimePickerDialog mTimePicker;
-                                                   mTimePicker = new TimePickerDialog(PostUploadActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                                                       @Override
-                                                       public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                                           String state = "AM";
-                                                           // 선택한 시간이 12를 넘을경우 "PM"으로 변경 및 -12시간하여 출력 (ex : PM 6시 30분)
-                                                           if (selectedHour > 12) {
-                                                               selectedHour -= 12;
-                                                               state = "PM";
-                                                           }
-                                                           // 출력할 형식 지정
-                                                           et_time.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
-                                                       }
-                                                   }, hour, minute, false); // true의 경우 24시간 형식의 TimePicker 출현
-                                                   mTimePicker.setTitle("Select Time");
-                                                   mTimePicker.show();
-                                               }
+                    @Override
+                    public void onClick(View v) {
+                        Calendar mcurrentTime = Calendar.getInstance();
+                        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                        int minute = mcurrentTime.get(Calendar.MINUTE);
+                        TimePickerDialog mTimePicker;
+                        mTimePicker = new TimePickerDialog(PostUploadActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                String state = "AM";
+                                // 선택한 시간이 12를 넘을경우 "PM"으로 변경 및 -12시간하여 출력 (ex : PM 6시 30분)
+                                if (selectedHour > 12) {
+                                    selectedHour -= 12;
+                                    state = "PM";
+                                }
+                                // 출력할 형식 지정
+                                et_time.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
+                            }
+                        }, hour, minute, false); // true의 경우 24시간 형식의 TimePicker 출현
+                        mTimePicker.setTitle("Select Time");
+                        mTimePicker.show();
+                    }
                                            }
                 );
             }
@@ -186,15 +242,15 @@ public class PostUploadActivity extends AppCompatActivity {
 
                 //Map<String, String> params = new HashMap<>();
 
-                JSONObject jsonObject = new JSONObject(); //head오브젝트와 body오브젝트를 담을 JSON오브젝트
+               // JSONObject jsonObject = new JSONObject(); //head오브젝트와 body오브젝트를 담을 JSON오브젝트
 
-                JSONObject headers = new JSONObject(); //JSON 오브젝트의 head 부분
+                //JSONObject headers = new JSONObject(); //JSON 오브젝트의 head 부분
                 JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
 
                 try {
                     //head 생성
-                    headers.put("Content-Type", "application/json;charset=utf-8");
-                    headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
+                    //headers.put("Content-Type", "application/json;charset=utf-8");
+                    //headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
 
                     //head 부분 생성 완료
 
@@ -210,7 +266,7 @@ public class PostUploadActivity extends AppCompatActivity {
                     body.put("num", postnum);
                     body.put("content",postexplain);
 
-                    jsonObject.put("body", body); //body 오브젝트 추가
+                    //jsonObject.put("body", body); //body 오브젝트 추가
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -280,7 +336,7 @@ public class PostUploadActivity extends AppCompatActivity {
 
                 };
 
-                Log.d("text", jsonObject.toString());
+                //Log.d("text", jsonObject.toString());
                 queue.add(joRequest);
 
 

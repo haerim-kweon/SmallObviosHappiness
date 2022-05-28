@@ -1,6 +1,7 @@
 package com.example.smallobvioshappiness;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,11 +48,13 @@ public class MainTab extends Fragment {
 
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.maintab, container, false);
         notice = rootView.findViewById(R.id.gotonotice);
+        queue = Volley.newRequestQueue(getContext());
 
 
         //알림탭 이동
@@ -62,7 +66,7 @@ public class MainTab extends Fragment {
             }
         });
 
-        //initUI(rootView);
+        initUI(rootView);
         return rootView;
     }
 
@@ -70,20 +74,60 @@ public class MainTab extends Fragment {
 
 
         post = new ArrayList<>();
-        Map<String, String>  params = new HashMap<>();
+        post.add(new Post(0,"제목", "카테고리", 10000, "deal", 3, 3,"1분전",null));
 
+        add_post();
 
-        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET,
-                "http://dev.sbch.shop:9000/app/posts?sort=' '", new JSONObject(params),
+        //리사이클러뷰 생성
+        recyclerView = rootView.findViewById(R.id.post_RecyclerView);
+        //리사이클러뷰 사이 구분선
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+
+        //레이아웃매니저 설정
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        //어댑터 생성, 아이템 추가
+        Log.d("text_adapter", "a");
+        adapter = new PostAdapter(post);
+        Log.d("text_adapter", "b");
+
+        //리사이클러뷰 연결
+        recyclerView.setAdapter(adapter);
+        Log.d("text_adapter", "c");
+
+    }
+
+    public void add_post(){
+        String url = "http://dev.sbch.shop:9000/app/posts?sort=''&town=권선동";
+
+        JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
+
+        SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
+
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url, body,
                 new Response.Listener<JSONObject>(){
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray result = response.getJSONArray("result");
-                            //제목, 카테고리, 가격, 찜여부, 찜개수, 시간
-//                            post.add(result.getString(2), result.getString(3), result.getInt(4), result.getInt(6), result.getInt(7), result.getString(8));
+                            Log.d("text_adapter", "d");
 
+                            Log.d("text?", response.toString());
+
+                            JSONArray array = response.getJSONArray("result");
+                            Log.d("text", "result 길이 : "+String.valueOf(array.length()));
+
+                            JSONArray jsonArray = response.optJSONArray("result");
+
+                            JSONObject element;
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                element = (JSONObject) jsonArray.opt(i);
+                                Log.d("text?", element.toString());
+                                post.add(new Post(element.getInt("postId"), element.getString("title"), element.getString("category"), element.getInt("price"), element.getString("transactionStatus"), element.getInt("interestStatus"), element.getInt("interestNum"), element.getString("createdAt"), element.getString("imgUrl")));
+
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -115,33 +159,15 @@ public class MainTab extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json;charset=utf-8");
-
+                headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
                 return headers;
             }
 
         };
+
         queue.add(joRequest);
 
-
-
-
-
-
-        //리사이클러뷰 생성
-        recyclerView = rootView.findViewById(R.id.post_RecyclerView);
-
-        //리사이클러뷰 사이 구분선
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
-
-        //레이아웃매니저 설정
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-
-        //어댑터 생성, 아이템 추가
-        adapter = new PostAdapter(post);
-
-        //리사이클러뷰 연결
-        recyclerView.setAdapter(adapter);
-
     }
+
+
 }

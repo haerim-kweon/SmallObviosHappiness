@@ -1,11 +1,13 @@
 package com.example.smallobvioshappiness;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.post, viewGroup,false);
+
         return new ItemViewHolder(view);
     }
 
@@ -37,11 +40,12 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
         Post post = posts.get(i);
 
+
         itemViewHolder.category.setText(post.getCategory());
         itemViewHolder.title.setText(post.getTitle());
-        itemViewHolder.time.setText(post.getTime());
-        itemViewHolder.price.setText(post.getPrice());
-        itemViewHolder.interest_num.setTextColor(post.getPrice());
+        itemViewHolder.time.setText(post.getCreatedAt());
+        itemViewHolder.price.setText(String.valueOf(post.getPrice())+" 원");
+        itemViewHolder.interest_num.setText(String.valueOf(post.getInterest_num()));
        // itemViewHolder.interest_state.set
         if(post.getInterest_state()==1){
 
@@ -67,12 +71,21 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
 
         public ItemViewHolder(@NonNull View itemView){
             super(itemView);
+
+
             category = itemView.findViewById(R.id.postcategory);
             title = itemView.findViewById(R.id.posttitle);
             time = itemView.findViewById(R.id.posttime);
             price = itemView.findViewById(R.id.postprice);
             interest_state = itemView.findViewById(R.id.interest_state);
             interest_num = itemView.findViewById(R.id.interext_num);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("text_ry", "a");
+                }
+            });
         }
     }
 

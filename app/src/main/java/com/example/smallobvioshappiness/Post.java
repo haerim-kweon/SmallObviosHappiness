@@ -1,11 +1,23 @@
 package com.example.smallobvioshappiness;
 
 public class Post {
+    Integer postId;
     String title;
     String category;
     Integer price;
+    String transaction_state;
     Integer interest_state;
     Integer interest_num;
+    String createdAt;
+    String imgURL;
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
 
     public String getTitle() {
         return title;
@@ -31,6 +43,14 @@ public class Post {
         this.price = price;
     }
 
+    public String getTransaction_state() {
+        return transaction_state;
+    }
+
+    public void setTransaction_state(String transaction_state) {
+        this.transaction_state = transaction_state;
+    }
+
     public Integer getInterest_state() {
         return interest_state;
     }
@@ -47,23 +67,31 @@ public class Post {
         this.interest_num = interest_num;
     }
 
-    public String getTime() {
-        return time;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Post(String title, String category, Integer price, Integer interest_state, Integer interest_num, String time) {
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
+    public Post(Integer postId, String title, String category, Integer price, String transaction_state, Integer interest_state, Integer interest_num, String createdAt, String imgURL) {
+        this.postId = postId;
         this.title = title;
         this.category = category;
         this.price = price;
+        this.transaction_state = transaction_state;
         this.interest_state = interest_state;
         this.interest_num = interest_num;
-        this.time = time;
+        this.createdAt = createdAt;
+        this.imgURL = imgURL;
     }
-
-    String time;
-
 }
