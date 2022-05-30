@@ -31,9 +31,11 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +56,8 @@ public class PostUploadActivity extends AppCompatActivity {
     private ImageButton btn_back;
     private Button location1, location2, btn_add;
     private TextView category, period, time;
+
+    int location1_id, location2_id;
 
     RequestQueue queue;
 
@@ -79,6 +83,7 @@ public class PostUploadActivity extends AppCompatActivity {
         et_date.setText(sdf.format(myCalendar.getTime()));
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -103,18 +108,26 @@ public class PostUploadActivity extends AppCompatActivity {
 
         location1 = findViewById(R.id.location1);
         location2 = findViewById(R.id.location2);
+
         SharedPreferences pref = getSharedPreferences("jwt",0);
 
 //
 
-        JsonObjectRequest locationRequest = new JsonObjectRequest(Request.Method.GET, "http://dev.sbch.shop:9000/app/posts/location", null,
-                new Response.Listener<JSONObject>(){
+        JsonArrayRequest locationRequest = new JsonArrayRequest(Request.Method.GET, "http://dev.sbch.shop:9000/app/posts/location", null,
+                new Response.Listener<JSONArray>(){
 
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
                             Log.d("text1", response.toString());
-                            JSONObject result = response.getJSONObject("result");
+                            String location1_town = response.getJSONObject(0).getString("town");
+                            location1_id = response.getJSONObject(0).getInt("locationId");
+                            String location2_town = response.getJSONObject(1).getString("town");
+                            location2_id = response.getJSONObject(1).getInt("locationId");
+
+                            location1.setText(location1_town);
+                            location2.setText(location2_town);
+                            //JSONObject result = response.getJSONObject(0);
                             Log.d("text", "3");
 
                         } catch (JSONException e) {
@@ -159,6 +172,35 @@ public class PostUploadActivity extends AppCompatActivity {
 
         //
 
+        location1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(location1.isSelected()){
+                    location1.setSelected(false);
+                }
+                else{
+                    location1.setSelected(true);
+                    if(location2.isSelected()){
+                        location2.setSelected(false);
+                    }
+                }
+            }
+        });
+
+        location2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(location2.isSelected()){
+                    location2.setSelected(false);
+                }
+                else{
+                    location2.setSelected(true);
+                    if(location1.isSelected()){
+                        location1.setSelected(false);
+                    }
+                }
+            }
+        });
 
 
         category.setOnClickListener(new View.OnClickListener() {
@@ -234,29 +276,26 @@ public class PostUploadActivity extends AppCompatActivity {
                 int postcategoty=1;
                 int postprice = Integer.parseInt(price.getText().toString());
                 int postnum = Integer.parseInt(num.getText().toString());
-                int postlocation = 1;
+                int postlocation = 0;
 
-                //Timestamp timestamp = Timestamp.valueOf("2022-05-30 21:00:00");
+                Log.d("text", "지역1 선택"+ location1.isSelected() + "지역2 선택" + location2.isSelected());
+                if(location1.isSelected()){
+                    postlocation = location1_id;
+                }
+                else if(location2.isSelected()){
+                    postlocation = location2_id;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "지역을 선택해주세요", Toast.LENGTH_SHORT ).show();
+                }
+
+
                 String timestamp = "2022-05-30T21:00:00";
 
 
-                //Map<String, String> params = new HashMap<>();
-
-               // JSONObject jsonObject = new JSONObject(); //head오브젝트와 body오브젝트를 담을 JSON오브젝트
-
-                //JSONObject headers = new JSONObject(); //JSON 오브젝트의 head 부분
                 JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
 
                 try {
-                    //head 생성
-                    //headers.put("Content-Type", "application/json;charset=utf-8");
-                    //headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
-
-                    //head 부분 생성 완료
-
-
-                    //jsonObject.put("head", headers); //head 오브젝트 추가
-
                     body.put("title", posttitle);
                     body.put("categoryId", postcategoty);
                     body.put("productName", postproduct);

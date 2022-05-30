@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolder> {
     private ArrayList<Post> posts;
+    private OnPostItemClickListener listener;
 
     public PostAdapter(ArrayList<Post> posts) {
         this.posts = posts;
@@ -59,6 +60,18 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
 
     }
 
+
+    public void setOnItemClicklistener(OnPostItemClickListener listener){
+        this.listener = listener;
+    }
+
+
+    public void onItemClick(ItemViewHolder holder, View view, int position) {
+        if(listener != null){
+            listener.onItemClick(holder,view,position);
+        }
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder{
         private TextView category;
         private TextView title;
@@ -78,15 +91,27 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
             time = itemView.findViewById(R.id.posttime);
             price = itemView.findViewById(R.id.postprice);
             interest_state = itemView.findViewById(R.id.interest_state);
-            interest_num = itemView.findViewById(R.id.interext_num);
+            interest_num = itemView.findViewById(R.id.interest_num);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("text_ry", "a");
+                    int position = getAdapterPosition();
+                    if(listener != null){
+                        listener.onItemClick(ItemViewHolder.this, view, position);
+                    }
                 }
             });
+
+
+
+
+
+
         }
+
+
+
     }
 
 
@@ -99,4 +124,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     }
 
 
+    public Post getItem(int position){
+        return posts.get(position);
+    }
 }

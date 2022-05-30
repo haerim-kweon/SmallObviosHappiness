@@ -174,7 +174,7 @@
                     android:id="@+id/location1"
                     android:layout_width="80dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/ic_btn_location"
+                    android:background="@drawable/btn_location"
                     android:textColor="@color/white"
                     android:text="동네1"
                     >
@@ -185,7 +185,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_width="80dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/ic_btn_location"
+                    android:background="@drawable/btn_location"
                     android:textColor="@color/white"
                     android:text="동네2"
                     >

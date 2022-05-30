@@ -82,7 +82,7 @@
                 app:srcCompat="@drawable/ic_interest_state_0" />
 
             <TextView
-                android:id="@+id/interext_num"
+                android:id="@+id/interest_num"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="숫자"

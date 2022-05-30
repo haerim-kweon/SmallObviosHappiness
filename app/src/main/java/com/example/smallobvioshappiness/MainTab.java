@@ -3,6 +3,7 @@ package com.example.smallobvioshappiness;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,37 +75,59 @@ public class MainTab extends Fragment {
 
 
         post = new ArrayList<>();
-        post.add(new Post(0,"제목", "카테고리", 10000, "deal", 3, 3,"1분전",null));
+        //post.add(new Post(0,"제목", "카테고리", 10000, "deal", 3, 3,"1분전",null));
 
         add_post();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //리사이클러뷰 생성
+                recyclerView = rootView.findViewById(R.id.post_RecyclerView);
+                //리사이클러뷰 사이 구분선
+                recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
 
-        //리사이클러뷰 생성
-        recyclerView = rootView.findViewById(R.id.post_RecyclerView);
-        //리사이클러뷰 사이 구분선
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+                //레이아웃매니저 설정
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                recyclerView.setLayoutManager(layoutManager);
 
-        //레이아웃매니저 설정
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+                //어댑터 생성, 아이템 추가
 
-        //어댑터 생성, 아이템 추가
-        Log.d("text_adapter", "a");
-        adapter = new PostAdapter(post);
-        Log.d("text_adapter", "b");
+                adapter = new PostAdapter(post);
+                //리사이클러뷰 연결
+                recyclerView.setAdapter(adapter);
 
-        //리사이클러뷰 연결
-        recyclerView.setAdapter(adapter);
-        Log.d("text_adapter", "c");
+                adapter.setOnItemClicklistener(new OnPostItemClickListener(){
+                    @Override
+                    public void onItemClick(PostAdapter.ItemViewHolder holder, View view, int position){
+                        Post item = adapter.getItem(position);
+                        Toast.makeText(getContext(),"제목 : "+item.getTitle()+" ID : " + item.getPostId(), Toast.LENGTH_SHORT).show();
+
+                        int itempostid = item.getPostId();
+                        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+                        intent.putExtra("postId", itempostid);
+
+                        startActivity(intent);
+
+                    }
+
+                });
+
+
+
+//내가 실행하고 싶은 코드
+
+
+            }
+        },1000);
+
+
 
     }
 
     public void add_post(){
         String url = "http://dev.sbch.shop:9000/app/posts?sort=''&town=권선동";
-
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
-
         SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
-
         JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url, body,
                 new Response.Listener<JSONObject>(){
 
@@ -166,6 +189,9 @@ public class MainTab extends Fragment {
         };
 
         queue.add(joRequest);
+
+
+
 
     }
 
