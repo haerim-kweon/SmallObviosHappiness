@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//키워드 등록, 키워드 조회 - 30, 34
+//키워드 등록, 키워드 조회  - 30, 34
 public class keywordActivity extends AppCompatActivity {
     private EditText keyword; //등록 키워드
     private List<String> keywords; //조회한 키워드들

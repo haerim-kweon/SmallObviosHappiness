@@ -28,7 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-//유저 차단 -31번
+//유저 차단  - 31번
 public class UserBlockAcitivity extends AppCompatActivity {
 
     private Button userBlock; //유저 차단하기 버튼

@@ -28,7 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-//게시글 신고하기 - 33번
+//게시글 신고하기  - 33번
 public class PostReportActivity extends AppCompatActivity {
     private Button postReportButton; //신고하기 버튼
     RequestQueue queue;

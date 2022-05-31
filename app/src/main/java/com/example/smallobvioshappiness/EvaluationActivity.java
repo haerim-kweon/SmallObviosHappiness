@@ -29,7 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-//신용도평가, 후기 작성 - 27번
+//신용도평가, 후기 작성  - 27번
 public class EvaluationActivity extends AppCompatActivity {
 
     private EditText score, content; //신뢰도 평가 한 점수, 평가 내용
