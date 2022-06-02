@@ -6,9 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +29,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -34,10 +43,11 @@ import java.util.Map;
 public class PostDetailActivity extends AppCompatActivity {
 
     RequestQueue queue;
-    ImageButton btn_back, btn_interest;
+    ImageButton btn_back, btn_interest, menu;
     Button btn_participation;
     TextView userNick, userLocation, category, createdAt, title, price, participant, deadline, contents;
     String transactionStatus;
+    int post_userId;
 
 
     @Override
@@ -53,6 +63,7 @@ public class PostDetailActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.imageButton14);
         btn_interest = findViewById(R.id.imageButton17);
         btn_participation = findViewById(R.id.btn_participate);
+        menu = findViewById(R.id.imageButton19);
 
         userNick = findViewById(R.id.textView20);
         userLocation = findViewById(R.id.postuser_location);
@@ -71,6 +82,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
         SharedPreferences pref = getSharedPreferences("jwt",0);
+        int userId = pref.getInt("userId", 0);
+
         JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url+postId, body,
                 new Response.Listener<JSONObject>(){
 
@@ -86,8 +99,9 @@ public class PostDetailActivity extends AppCompatActivity {
                             userLocation.setText(result.getString("town"));
                             contents.setText(result.getString("content"));
                             deadline.setText(result.getString("date"));
-                            participant.setText(String.valueOf(result.getString("num"))+"명");
-                            transactionStatus = result.getString("transactionStatus");
+                            participant.setText(String.valueOf(result.getString("joinNum")+" / "+result.getString("num"))+"명");
+                            //transactionStatus = result.getString("transactionStatus");
+                            post_userId = result.getInt("userId");
                             if(result.getInt("interestStatus")==1){
                                 btn_interest.setSelected(true);
                             }
@@ -134,6 +148,95 @@ public class PostDetailActivity extends AppCompatActivity {
         Log.d("text", "body : " + body.toString());
         queue.add(joRequest);
 
+
+        //뒤로 가기 버튼
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        //bottom_sheet
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("text", "userid : " + String.valueOf(userId) + "/ post_userId : " + String.valueOf(post_userId));
+                //내 게시글인 경우
+                if(userId == post_userId){
+                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(PostDetailActivity.this, R.style.BottomSheetDialogTheme);
+                    View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
+                            R.layout.bottom_sheet, (LinearLayout)findViewById(R.id.bottom_sheet1)
+                    );
+
+                    TextView post_modify, status_modify, post_remove, join_people;
+                    post_modify = bottomSheetView.findViewById(R.id.post_modify);
+                    status_modify = bottomSheetView.findViewById(R.id.status_modify);
+                    post_remove = bottomSheetView.findViewById(R.id.post_remove);
+                    join_people = bottomSheetView.findViewById(R.id.join_people1);
+
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
+
+                    //거래 상태 변경하기
+                    status_modify.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d("text", "abc");
+                            PopupMenu popupMenu = new PopupMenu(PostDetailActivity.this, view);
+                            getMenuInflater().inflate(R.menu.translation_status_menu, popupMenu.getMenu());
+
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem menuItem) {
+                                    if (menuItem.getItemId() == R.id.status_ongoing) {
+                                        transactionStatus = "open";
+                                        transactionStatus_modify(postId);
+                                    } else if (menuItem.getItemId() == R.id.status_translation) {
+                                        transactionStatus = "deal";
+                                        transactionStatus_modify(postId);
+                                    } else {
+                                        transactionStatus = "complete";
+                                        transactionStatus_modify(postId);
+                                    }
+
+
+                                    return false;
+
+
+
+                                }
+                            });
+
+                            popupMenu.show();
+
+
+                        }
+
+                    });
+
+
+
+                }
+                //다른 사람 게시글인 경우
+                else {
+
+                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(PostDetailActivity.this, R.style.BottomSheetDialogTheme);
+                    View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
+                            R.layout.bottom_sheet2, (LinearLayout)findViewById(R.id.bottom_sheet2)
+
+                    );
+
+                    TextView post_complain, join_people2;
+                    post_complain = bottomSheetView.findViewById(R.id.post_complain);
+                    join_people2 = bottomSheetView.findViewById(R.id.join_people2);
+
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
+                }
+
+            }
+        });
 
         //찜 누르기
         btn_interest.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +331,7 @@ public class PostDetailActivity extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 try {
                                     Log.d("text", response.toString());
-                                    JSONObject result = response.getJSONObject("result");
+                                    //JSONObject result = response.getJSONObject("result");
                                     Toast.makeText(getApplicationContext(), response.getString("result"), Toast.LENGTH_SHORT).show();
 
                                 } catch (JSONException e) {
@@ -273,4 +376,63 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void transactionStatus_modify(int postId){
+
+        String url = "http://dev.sbch.shop:9000/app/posts/" + postId + "/translate?status=" + transactionStatus;
+
+        Log.d("Text", "transactionStatus_modify : " + url);
+        JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
+        SharedPreferences pref = getSharedPreferences("jwt", 0);
+
+
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url, body,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject result = response.getJSONObject("result");
+                            Log.d("text", result.toString());
+                            Toast.makeText(getApplicationContext(), "거래 상태 : " + result.getString("transactionStatus"), Toast.LENGTH_SHORT).show();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse rep = error.networkResponse;
+                        if (error instanceof ServerError && rep != null) {
+                            try {
+                                String r = new String(rep.data, HttpHeaderParser.parseCharset(rep.headers, "utf-8"));
+                                JSONObject jo = new JSONObject(r);
+                                Log.d("text", "결과" + jo.toString());
+                            } catch (UnsupportedEncodingException | JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        Log.d("text", "ERROR: " + error.getMessage());
+                    }
+                }
+        ) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json;charset=utf-8");
+                headers.put("X-ACCESS-TOKEN", pref.getString("jwt", ""));
+                return headers;
+            }
+
+        };
+        queue.add(joRequest);
+    }
 }
+
+

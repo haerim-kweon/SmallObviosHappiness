@@ -93,13 +93,14 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                                         JSONObject result = response.getJSONObject("result");
                                         String jwt = result.getString("jwt");
-
+                                        int userid = result.getInt("userIdx");
                                         SharedPreferences pref = getSharedPreferences("jwt",0);
                                         SharedPreferences.Editor editor = pref.edit();
                                         editor.putString("jwt", jwt );
+                                        editor.putInt("userId", userid);
                                         editor.commit();
                                         Log.d("text", pref.getString("jwt",""));
-
+                                        Log.d("text", String.valueOf(pref.getInt("userId", 0)));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

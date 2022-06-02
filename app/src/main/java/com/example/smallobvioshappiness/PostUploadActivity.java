@@ -208,8 +208,6 @@ public class PostUploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(PostUploadActivity.this, view);
                 getMenuInflater().inflate(R.menu.category, popupMenu.getMenu());
-
-
                 popupMenu.show();
             }
         });

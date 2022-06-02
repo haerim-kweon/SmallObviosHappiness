@@ -46,4 +46,7 @@ dependencies {
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
 
+    //하단 시트
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
