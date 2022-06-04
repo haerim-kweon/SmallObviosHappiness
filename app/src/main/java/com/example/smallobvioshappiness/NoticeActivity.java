@@ -12,8 +12,6 @@ import com.google.android.material.tabs.TabLayout;
 
 public class NoticeActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-
     News news;
     Notice_ChatTab chat;
 
@@ -36,7 +34,6 @@ public class NoticeActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Log.d("NoticeActivity", "선택된 탭 : " + position);
 
                 Fragment selected = null;
                 if(position == 0){

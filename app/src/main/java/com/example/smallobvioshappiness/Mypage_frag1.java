@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,75 +32,52 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainTab extends Fragment {
-
+public class Mypage_frag1 extends Fragment {
     RecyclerView recyclerView;
-    PostAdapter adapter;
-    ArrayList<Post> post;
-    ImageButton notice;
+    Post_List_Adapter adapter;
+    ArrayList<Post_List> post_lists;
     RequestQueue queue;
-
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.maintab, container, false);
-        notice = rootView.findViewById(R.id.gotonotice);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.mypage_frag1, container, false);
+
+        Log.d("text", "Mypage_frag1 Start");
         queue = Volley.newRequestQueue(getContext());
-
-
-        //알림탭 이동
-        notice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NoticeActivity.class);
-                startActivity(intent);
-            }
-        });
 
         initUI(rootView);
         return rootView;
     }
 
-    public void initUI(View rootView){
-
-
-        post = new ArrayList<>();
-        //post.add(new Post(0,"제목", "카테고리", 10000, "deal", 3, 3,"1분전",null));
-
+    public void initUI(ViewGroup rootView) {
+        post_lists = new ArrayList<>();
         add_post();
+
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
-                //리사이클러뷰 생성
-                recyclerView = rootView.findViewById(R.id.post_RecyclerView);
-                //리사이클러뷰 사이 구분선
-                //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+            public void run() { //리사이클러뷰 생성
+                recyclerView = rootView.findViewById(R.id.mypage_frag1_recyclerview);
 
+
+                //리사이클러뷰 사이 구분선
+                recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
                 //레이아웃매니저 설정
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(layoutManager);
 
                 //어댑터 생성, 아이템 추가
-
-                adapter = new PostAdapter(post);
-                //리사이클러뷰 연결
-                recyclerView.setAdapter(adapter);
-
-                adapter.setOnItemClicklistener(new OnPostItemClickListener(){
+                adapter = new Post_List_Adapter(post_lists);
+                adapter.setOnItemClicklistener(new OnPostListItemClickListener(){
                     @Override
-                    public void onItemClick(PostAdapter.ItemViewHolder holder, View view, int position){
-                        Post item = adapter.getItem(position);
-                        //Toast.makeText(getContext(),"제목 : "+item.getTitle()+" ID : " + item.getPostId(), Toast.LENGTH_SHORT).show();
+                    public void onItemClick(Post_List_Adapter.ItemViewHolder holder, View view, int position){
+                        Post_List item = adapter.getItem(position);
 
-                        int itempostid = item.getPostId();
+                        int itempostid = item.getId();
                         Intent intent = new Intent(getContext(), PostDetailActivity.class);
                         intent.putExtra("postId", itempostid);
 
@@ -111,32 +86,25 @@ public class MainTab extends Fragment {
                     }
 
                 });
-
-
-
-//내가 실행하고 싶은 코드
+                //리사이클러뷰 연결
+                recyclerView.setAdapter(adapter);
 
 
             }
-        },1000);
-
-
-
+        },100);
     }
 
     public void add_post(){
-        String url = "http://dev.sbch.shop:9000/app/posts?sort=''&town=권선동";
+        String url = "http://dev.sbch.shop:9000/app/users/join";
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
         SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
+
         JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url, body,
                 new Response.Listener<JSONObject>(){
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("text_adapter", "d");
-
-                            Log.d("text?", response.toString());
 
                             JSONArray array = response.getJSONArray("result");
                             Log.d("text", "result 길이 : "+String.valueOf(array.length()));
@@ -148,7 +116,7 @@ public class MainTab extends Fragment {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 element = (JSONObject) jsonArray.opt(i);
                                 Log.d("text?", element.toString());
-                                post.add(new Post(element.getInt("postId"), element.getString("title"), element.getString("category"), element.getInt("price"), element.getString("transactionStatus"), element.getInt("interestStatus"), element.getInt("interestNum"), element.getString("createdAt"), element.getString("imgUrl")));
+                                post_lists.add(new Post_List(element.getInt("postId"),element.getString("title"), element.getString("category")));
 
                             }
 
@@ -194,6 +162,4 @@ public class MainTab extends Fragment {
 
 
     }
-
-
 }

@@ -1,5 +1,10 @@
 package com.example.smallobvioshappiness;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,14 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -35,57 +34,51 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfileTab extends Fragment {
-    private View view;
+public class OtherProfileActivity extends AppCompatActivity {
 
-    Mypage_frag1 frag1;
-    Mypage_frag2 frag2;
-    Mypage_frag3 frag3;
-
-    TextView nick, score, alarm, location_setting, location_certify, review, logout ;
-    Button modify;
+    News news;
+    Notice_ChatTab chat;
     RequestQueue queue;
-    int userid;
+    TextView nick1, nick2, location;
+    ImageButton btn_back;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.profiletab, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.theother_profile);
 
+        news = new News();
+        chat = new Notice_ChatTab();
 
-        frag1 = new Mypage_frag1();
-        frag2 = new Mypage_frag2();
-        frag3 = new Mypage_frag3();
+        nick1 = findViewById(R.id.otherprofile_nick1);
+        nick2 = findViewById(R.id.otherprofile_nick2);
+        location = findViewById(R.id.otherprofile_location);
+        btn_back = findViewById(R.id.otherprofile_btn_back);
+        getSupportFragmentManager().beginTransaction().replace(R.id.otherprofile_container, news).commit();
 
-        getFragmentManager().beginTransaction().replace(R.id.mypage_container, frag1).commit();
-
-        TabLayout tabs = view.findViewById(R.id.mypage_tabs);
-        tabs.addTab(tabs.newTab().setText("참여내역"));
+        TabLayout tabs = findViewById(R.id.otherprofile_tabs);
+        tabs.addTab(tabs.newTab().setText("공구후기"));
         tabs.addTab(tabs.newTab().setText("주최한내역"));
-        tabs.addTab(tabs.newTab().setText("찜한내역"));
+
+        //뒤로 가기 버튼
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        Intent intent = getIntent();
+        int post_userid = intent.getIntExtra("postUserId",0);
 
 
-        nick = view.findViewById(R.id.profile_nick);
-        score = view.findViewById(R.id.profile_score);
-        modify = view.findViewById(R.id.profile_modify);
+        queue = Volley.newRequestQueue(getApplicationContext());
+        String url2 = "http://dev.sbch.shop:9000/app/users/profile/";
 
-        alarm = view.findViewById(R.id.alarm_setting);
-        location_setting = view.findViewById(R.id.location_setting);
-        location_certify = view.findViewById(R.id.certify_setting);
-        review = view.findViewById(R.id.myreview);
-        logout = view.findViewById(R.id.logout);
-
-
-
-
-
-        queue = Volley.newRequestQueue(getContext());
-        String url2 = "http://dev.sbch.shop:9000/app/users/profile/0";
-
+        Log.d("text", url2+post_userid);
         JSONObject body2 = new JSONObject(); //JSON 오브젝트의 body 부분
-        SharedPreferences pref =  this.getActivity().getSharedPreferences("jwt",0);
-        Log.d("text", "jwt : " + pref.getString("jwt",""));
-        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url2, body2,
+        SharedPreferences pref = getSharedPreferences("jwt",0);
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url2+post_userid, body2,
                 new Response.Listener<JSONObject>(){
 
                     @Override
@@ -93,8 +86,9 @@ public class ProfileTab extends Fragment {
                         try {
                             Log.d("text", response.toString());
                             JSONObject result = response.getJSONObject("result");
-                            nick.setText(result.getString("nick"));
-                            score.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 5.0");
+                            nick1.setText(result.getString("nick")+"의 소행성");
+                            nick2.setText(result.getString("nick"));
+                            location.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 5.0");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -135,6 +129,8 @@ public class ProfileTab extends Fragment {
         queue.add(joRequest);
 
 
+
+
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -142,14 +138,12 @@ public class ProfileTab extends Fragment {
 
                 Fragment selected = null;
                 if(position == 0){
-                    selected = frag1;
-                } else if(position == 1){
-                    selected = frag2;
+                    selected = news;
                 } else{
-                    selected = frag3;
+                    selected = chat;
                 }
 
-                getFragmentManager().beginTransaction().replace(R.id.mypage_container, selected).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.otherprofile_container, selected).commit();
             }
 
             @Override
@@ -164,17 +158,7 @@ public class ProfileTab extends Fragment {
         });
 
 
-        location_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), LocationSearchActivity.class);
-                startActivity(intent);
-            }
-        });
 
-
-
-        return view;
 
     }
 

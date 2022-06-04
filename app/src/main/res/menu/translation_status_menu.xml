@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item
+        android:id="@+id/status_ongoing"
+        android:title="모집 중"
+
+        />
+    <item
+        android:id="@+id/status_translation"
+        android:title="거래 중"
+        />
+    <item
+        android:id="@+id/status_end"
+        android:title="거래 완료"
+        />
+</menu>

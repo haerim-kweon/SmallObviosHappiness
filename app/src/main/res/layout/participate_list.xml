@@ -7,8 +7,21 @@
     android:background="@color/white">
 
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#E9E9EA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
     <TextView
-        android:id="@+id/notice_contents"
+        android:id="@+id/postlist_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="알림내용"
@@ -16,15 +29,15 @@
         android:textSize="6pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.407">
+        app:layout_constraintVertical_bias="0.745">
 
     </TextView>
 
     <TextView
-        android:id="@+id/notice_title"
+        android:id="@+id/postlist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="공구 게시물 제목"
@@ -32,23 +45,26 @@
         android:textSize="7pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.755">
+        app:layout_constraintVertical_bias="0.333">
 
     </TextView>
 
-    <ImageButton
-        android:id="@+id/btn_noticetopost"
-        android:layout_width="38dp"
-        android:layout_height="47dp"
-        android:backgroundTint="@color/white"
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/btn_location"
+        android:text="후기 작성하기"
+        android:textColor="@color/white"
+        android:textSize="4.5pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintHorizontal_bias="0.915"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.521"
-        app:srcCompat="@drawable/ic_vector_175__stroke_" />
+        app:layout_constraintVertical_bias="0.457">
+
+    </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>

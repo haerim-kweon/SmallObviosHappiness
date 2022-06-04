@@ -77,8 +77,10 @@
             </ImageView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/post_detail_profile"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:clickable="true"
                 android:background="@color/white">
 
                 <ImageView

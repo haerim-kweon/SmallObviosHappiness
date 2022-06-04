@@ -12,18 +12,23 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 
 public class News extends Fragment {
     RecyclerView recyclerView;
     NewsAdapter adapter;
     ArrayList<Chat> news;
+    RequestQueue queue;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.news, container, false);
+        queue = Volley.newRequestQueue(getContext());
 
         initUI(rootView);
         return rootView;

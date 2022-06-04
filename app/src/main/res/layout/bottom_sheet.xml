@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_sheet1"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:orientation="vertical"
+    android:padding = "20dp"
+    android:background="@drawable/bottom_sheet_background">
+
+
+    <TextView
+        android:id="@+id/post_modify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:clickable="true"
+        android:textColor="@color/black"
+        android:text="게시글 수정하기"
+        ></TextView>
+    <TextView
+        android:id="@+id/status_modify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:clickable="true"
+        android:onClick="onTextViewClicked"
+        android:textColor="@color/black"
+        android:text="거래 상태 수정하기"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/post_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:clickable="true"
+        android:text="게시글 삭제하기"
+        android:textColor="@color/black"
+        ></TextView>
+    <TextView
+        android:id="@+id/join_people1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:clickable="true"
+        android:text="참여자 목록 보기"
+        android:textColor="@color/black"
+        ></TextView>
+
+</LinearLayout>

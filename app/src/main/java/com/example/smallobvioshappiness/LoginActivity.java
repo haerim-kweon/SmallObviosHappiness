@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("text", "a");
                 String userEmail = email.getText().toString();
                 String userPassword = password.getText().toString();
                 Map<String, String>  params = new HashMap<>();

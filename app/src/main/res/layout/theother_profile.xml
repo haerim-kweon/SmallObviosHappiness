@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -28,46 +27,37 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
 
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="나의 소행성"
-            android:textColor="@color/black"
-            android:textSize="8pt"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
         <ImageButton
-            android:id="@+id/imageButton20"
+            android:id="@+id/otherprofile_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_setting" />
+            app:layout_constraintVertical_bias="0.407"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
-        <Button
-            android:id="@+id/profile_modify"
-            android:layout_width="78dp"
-            android:layout_height="28dp"
-            android:background="@drawable/white_button"
-            android:text="프로필 수정"
-            android:textColor="#6B7583"
-            android:textSize="4.5pt"
+
+        <TextView
+            android:id="@+id/otherprofile_nick1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="   의 소행성"
+            android:textColor="@color/black"
+            android:textSize="8pt"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton20"
-            app:layout_constraintHorizontal_bias="0.957"
-            app:layout_constraintStart_toEndOf="@+id/textView21"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.287"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.644" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +78,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/profile_nick"
+            android:id="@+id/otherprofile_nick2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="닉네임"
@@ -105,16 +95,16 @@
         </TextView>
 
         <TextView
-            android:id="@+id/profile_score"
+            android:id="@+id/otherprofile_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="점수"
+            android:text="청파동"
             android:textColor="#767FFE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.089"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/profile_nick"
+            app:layout_constraintTop_toBottomOf="@+id/otherprofile_nick2"
             app:layout_constraintVertical_bias="0.18">
 
         </TextView>
@@ -139,7 +129,7 @@
                 tools:ignore="MissingConstraints">
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/mypage_tabs"
+                    android:id="@+id/otherprofile_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/cardview_light_background"
@@ -154,7 +144,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <FrameLayout
-                android:id="@+id/mypage_container"
+                android:id="@+id/otherprofile_container"
                 android:layout_width="match_parent"
                 android:layout_height="340dp"
                 app:layout_anchorGravity="center"
@@ -165,80 +155,6 @@
             </FrameLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:paddingTop="20dp"
-            android:paddingLeft="20dp"
-            >
-            <TextView
-                android:id="@+id/alarm_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="알람 설정"
-                android:textSize="7pt"
-                android:paddingLeft="20dp"
-                android:paddingVertical="15dp"
-                android:textColor="@color/black"
-                android:clickable="true"
-                android:textStyle="bold">
-            </TextView>
-            <TextView
-                android:id="@+id/location_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="내 동네 설정"
-                android:textSize="7pt"
-                android:paddingLeft="20dp"
-                android:paddingVertical="15dp"
-                android:textColor="@color/black"
-                android:clickable="true"
-                android:textStyle="bold">
-            </TextView>
-            <TextView
-                android:id="@+id/certify_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="동네 인증하기"
-                android:textSize="7pt"
-                android:paddingLeft="20dp"
-                android:paddingVertical="15dp"
-                android:textColor="@color/black"
-                android:textStyle="bold">
-            </TextView>
-            <TextView
-                android:id="@+id/myreview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="공구 후기"
-                android:textSize="7pt"
-                android:paddingLeft="20dp"
-                android:paddingVertical="15dp"
-                android:textColor="@color/black"
-                android:clickable="true"
-                android:textStyle="bold">
-            </TextView>
-            <TextView
-                android:id="@+id/logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="로그아웃"
-                android:textSize="7pt"
-                android:paddingLeft="20dp"
-                android:paddingVertical="15dp"
-                android:textColor="#F15646"
-                android:clickable="true"
-                android:textStyle="bold">
-            </TextView>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                ></Space>
-        </LinearLayout>
 
 
 </LinearLayout>
