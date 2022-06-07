@@ -310,20 +310,41 @@
                     android:textColor="@color/black"
                     android:textSize="7pt"></TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:text="댓글"
-                    android:textColor="@color/black"
-                    android:textSize="8pt"
-                    android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/edittext_comment"
+                        android:paddingHorizontal="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:hint="댓글을 입력해주세요"
+                        android:textSize="6pt"
+                        android:background="@drawable/white_button"
+                        >
+                    </EditText>
+                    <ImageButton
+                        android:id="@+id/btn_add_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/white"
+                        app:srcCompat="@drawable/ic_edit_duotone_line"
+                        >
+
+
+                    </ImageButton>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/comment_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp"
+                    >
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -362,10 +383,10 @@
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.855"
+            app:layout_constraintHorizontal_bias="0.67"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.833" />
 
         <ImageButton
             android:id="@+id/imageButton17"
@@ -374,10 +395,10 @@
             android:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_participate"
-            app:layout_constraintHorizontal_bias="0.432"
+            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.733"
             app:srcCompat="@drawable/btn_interest" />
 
 

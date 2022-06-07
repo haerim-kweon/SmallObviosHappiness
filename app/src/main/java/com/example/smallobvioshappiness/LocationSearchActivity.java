@@ -3,6 +3,7 @@ package com.example.smallobvioshappiness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,7 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -43,6 +46,8 @@ public class LocationSearchActivity extends AppCompatActivity {
     private LocationAdpater adapter;      // 리스트뷰에 연결할 아답터
     private ArrayList<String> arraylist;
     private Button btn_search;
+    private ImageButton btn_back;
+    String location1, location2, location3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,16 @@ public class LocationSearchActivity extends AppCompatActivity {
         searchView = (EditText) findViewById(R.id.searchView3);
         listView = (ListView) findViewById(R.id.listView);
         btn_search = findViewById(R.id.btn_location_search);
+
+        //뒤로가기 버튼
+        btn_back = findViewById(R.id.location_search_btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
         // 리스트를 생성한다.
         list = new ArrayList<String>();
@@ -84,6 +99,7 @@ public class LocationSearchActivity extends AppCompatActivity {
                                     for (int i = 0; i < array.length(); i++) {
                                         element = (JSONObject) array.opt(i);
                                         Log.d("text", element.toString());
+
                                         list.add(element.getString("resion1") + " " +element.getString("resion2")+ " " +element.getString("resion3"));
 
                                         // 리스트의 모든 데이터를 arraylist에 복사한다.// list 복사본을 만든다.
@@ -143,14 +159,23 @@ public class LocationSearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //String location = list.get(position);
 
-                String[] location_split = list.get(position).split(" ",3);
-
+                String[] location_split = list.get(position).split(" ",4);
+                if (location_split.length == 4){
+                    location1 = location_split[0] + " " +location_split[1];
+                    location2 = location_split[2];
+                    location3 = location_split[3];
+                }
+                else{
+                    location1 = location_split[0];
+                    location2 = location_split[1];
+                    location3 = location_split[2];
+                }
                 Log.d("text", list.get(position));
 
                 String url2 = "http://dev.sbch.shop:9000/app/users/location/choice?";
-                String region1 = "region1=" + location_split[0];
-                String region2 = "&region2=" + location_split[1];
-                String region3 = "&region3=" + location_split[2];
+                String region1 = "region1=" + location1;
+                String region2 = "&region2=" + location2;
+                String region3 = "&region3=" + location3;
 
                 Log.d("text", url2+region1+region2+region3);
 
@@ -165,7 +190,13 @@ public class LocationSearchActivity extends AppCompatActivity {
                                     Log.d("text", response.toString());
 
                                     JSONObject result = response.getJSONObject("result");
-
+                                    if(response.getBoolean("isSuccess")){
+                                        Toast.makeText(getApplicationContext(), list.get(position) + "가(이) 내 위치로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LocationSearchActivity.this, LocationActivity.class);
+                                        intent.putExtra("locationId", result.getInt("id"));
+                                        Log.d("text", "locationId : "+result.getInt("id"));
+                                        startActivity(intent);
+                                    }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

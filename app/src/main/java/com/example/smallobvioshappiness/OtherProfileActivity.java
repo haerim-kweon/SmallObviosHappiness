@@ -36,7 +36,8 @@ import java.util.Map;
 
 public class OtherProfileActivity extends AppCompatActivity {
 
-    News news;
+    OtherProfile_frag1 frag1;
+    OtherProfile_frag2 frag2;
     Notice_ChatTab chat;
     RequestQueue queue;
     TextView nick1, nick2, location;
@@ -46,15 +47,21 @@ public class OtherProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.theother_profile);
+        Intent intent = getIntent();
+        int post_userid = intent.getIntExtra("postUserId",0);
+        Bundle bundle = new Bundle();
+        bundle.putInt("postUserId", post_userid);
 
-        news = new News();
-        chat = new Notice_ChatTab();
+        frag1 = new OtherProfile_frag1();
+        frag2 = new OtherProfile_frag2();
+
 
         nick1 = findViewById(R.id.otherprofile_nick1);
         nick2 = findViewById(R.id.otherprofile_nick2);
         location = findViewById(R.id.otherprofile_location);
         btn_back = findViewById(R.id.otherprofile_btn_back);
-        getSupportFragmentManager().beginTransaction().replace(R.id.otherprofile_container, news).commit();
+        frag1.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.otherprofile_container, frag1).commit();
 
         TabLayout tabs = findViewById(R.id.otherprofile_tabs);
         tabs.addTab(tabs.newTab().setText("공구후기"));
@@ -67,9 +74,6 @@ public class OtherProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        Intent intent = getIntent();
-        int post_userid = intent.getIntExtra("postUserId",0);
 
 
         queue = Volley.newRequestQueue(getApplicationContext());
@@ -88,7 +92,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                             JSONObject result = response.getJSONObject("result");
                             nick1.setText(result.getString("nick")+"의 소행성");
                             nick2.setText(result.getString("nick"));
-                            location.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 5.0");
+                            location.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 10.0");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -138,9 +142,11 @@ public class OtherProfileActivity extends AppCompatActivity {
 
                 Fragment selected = null;
                 if(position == 0){
-                    selected = news;
+                    selected = frag1;
+                    frag1.setArguments(bundle);
                 } else{
-                    selected = chat;
+                    selected = frag2;
+                    frag2.setArguments(bundle);
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.otherprofile_container, selected).commit();

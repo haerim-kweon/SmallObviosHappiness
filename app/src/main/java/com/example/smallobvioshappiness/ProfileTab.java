@@ -1,5 +1,6 @@
 package com.example.smallobvioshappiness;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -42,16 +45,23 @@ public class ProfileTab extends Fragment {
     Mypage_frag2 frag2;
     Mypage_frag3 frag3;
 
+    Notice_Setting notice_setting;
+    ReviewPage reviewpage;
+
     TextView nick, score, alarm, location_setting, location_certify, review, logout ;
     Button modify;
     RequestQueue queue;
     int userid;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.profiletab, container, false);
 
+        notice_setting = new Notice_Setting();
+        reviewpage = new ReviewPage();
 
         frag1 = new Mypage_frag1();
         frag2 = new Mypage_frag2();
@@ -75,9 +85,37 @@ public class ProfileTab extends Fragment {
         review = view.findViewById(R.id.myreview);
         logout = view.findViewById(R.id.logout);
 
+        //알람 설정 이동
+        alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fm = getFragmentManager();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.main_frame, notice_setting);
+                ft.commit();
+            }
+        });
 
+        //리뷰 이동
+        review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fm = getFragmentManager();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.main_frame, reviewpage);
+                ft.commit();
+            }
+        });
 
+        //로그아웃
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
 
+            }
+        });
 
         queue = Volley.newRequestQueue(getContext());
         String url2 = "http://dev.sbch.shop:9000/app/users/profile/0";
@@ -94,7 +132,7 @@ public class ProfileTab extends Fragment {
                             Log.d("text", response.toString());
                             JSONObject result = response.getJSONObject("result");
                             nick.setText(result.getString("nick"));
-                            score.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 5.0");
+                            score.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 10.0");
 
                         } catch (JSONException e) {
                             e.printStackTrace();

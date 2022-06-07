@@ -91,7 +91,7 @@ public class Mypage_frag1 extends Fragment {
 
 
             }
-        },100);
+        },300);
     }
 
     public void add_post(){

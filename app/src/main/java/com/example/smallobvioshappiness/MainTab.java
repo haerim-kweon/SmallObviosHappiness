@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -44,10 +48,11 @@ public class MainTab extends Fragment {
     RecyclerView recyclerView;
     PostAdapter adapter;
     ArrayList<Post> post;
-    ImageButton notice;
+    ImageButton notice, locationSelect;
     RequestQueue queue;
+    TextView location;
 
-
+    String location_selection, location1, location2;
 
 
     @Nullable
@@ -56,6 +61,105 @@ public class MainTab extends Fragment {
         View rootView = inflater.inflate(R.layout.maintab, container, false);
         notice = rootView.findViewById(R.id.gotonotice);
         queue = Volley.newRequestQueue(getContext());
+
+        location = rootView.findViewById(R.id.maintab_location);
+        locationSelect = rootView.findViewById(R.id.location_select);
+
+
+
+        //기본 위치 설정
+        SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
+        JsonArrayRequest locationRequest = new JsonArrayRequest(Request.Method.GET, "http://dev.sbch.shop:9000/app/posts/location", null,
+                new Response.Listener<JSONArray>(){
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            Log.d("text1", response.toString());
+                            location1 = response.getJSONObject(0).getString("town");
+                            location.setText(location1);
+                            location2 = response.getJSONObject(1).getString("town");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse rep = error.networkResponse;
+                        if(error instanceof ServerError && rep != null){
+                            try{
+                                String r = new String(rep.data, HttpHeaderParser.parseCharset(rep.headers, "utf-8"));
+                                JSONObject jo = new JSONObject(r);
+                                Log.d("text", "결과"+jo.toString());
+                            }catch(UnsupportedEncodingException | JSONException e1){
+                                e1.printStackTrace();
+                            }
+                        }
+                        Log.d("text", "ERROR: "+error.getMessage());
+                    }
+                }
+        )
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json;charset=utf-8");
+                headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
+                return headers;
+            }
+
+        };
+        queue.add(locationRequest);
+
+
+        //위치 선택
+        locationSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.location_select, popupMenu.getMenu());
+
+                MenuItem item = popupMenu.getMenu().findItem(R.id.location1);
+                item.setTitle(location1);
+
+                MenuItem item1 = popupMenu.getMenu().findItem(R.id.location2);
+                item1.setTitle(location2);
+
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        //menuItem.setTitle();
+                        //menuItem.setTitle(location1);
+                        //menuItem.setTitle(location2);
+
+                        if (menuItem.getItemId() == R.id.location1) {
+                            location_selection = location1;
+                            location.setText(location1);
+                        }
+                        else{
+
+                            location_selection = location2;
+                            location.setText(location2);
+                        }
+
+                        add_post();
+                        initUI(rootView);
+                        return false;
+
+
+                    }
+                });
+
+                popupMenu.show();
+
+            }
+        });
 
 
         //알림탭 이동
@@ -72,8 +176,6 @@ public class MainTab extends Fragment {
     }
 
     public void initUI(View rootView){
-
-
         post = new ArrayList<>();
         //post.add(new Post(0,"제목", "카테고리", 10000, "deal", 3, 3,"1분전",null));
 
@@ -84,7 +186,7 @@ public class MainTab extends Fragment {
                 //리사이클러뷰 생성
                 recyclerView = rootView.findViewById(R.id.post_RecyclerView);
                 //리사이클러뷰 사이 구분선
-                //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+                recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
 
                 //레이아웃매니저 설정
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -95,7 +197,7 @@ public class MainTab extends Fragment {
                 adapter = new PostAdapter(post);
                 //리사이클러뷰 연결
                 recyclerView.setAdapter(adapter);
-
+                adapter.notifyDataSetChanged();
                 adapter.setOnItemClicklistener(new OnPostItemClickListener(){
                     @Override
                     public void onItemClick(PostAdapter.ItemViewHolder holder, View view, int position){
@@ -113,22 +215,21 @@ public class MainTab extends Fragment {
                 });
 
 
-
-//내가 실행하고 싶은 코드
-
-
             }
-        },1000);
+        },300);
 
 
 
     }
 
     public void add_post(){
-        String url = "http://dev.sbch.shop:9000/app/posts?sort=''&town=권선동";
+        post.clear();
+
+        String url = "http://dev.sbch.shop:9000/app/posts?sort=''&town=";
+        Log.d("text", "add_post URL : " + url + location_selection);
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
         SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
-        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url, body,
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url+location_selection, body,
                 new Response.Listener<JSONObject>(){
 
                     @Override
@@ -194,6 +295,7 @@ public class MainTab extends Fragment {
 
 
     }
+
 
 
 }

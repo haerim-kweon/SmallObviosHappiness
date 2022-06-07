@@ -3,7 +3,7 @@ package com.example.smallobvioshappiness;
 public class JoinPerson {
     String name;
     int userId;
-
+//권선동
 
     public int getUserId() {
         return userId;

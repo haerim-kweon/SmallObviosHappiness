@@ -7,10 +7,10 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입"
+        android:text="위치 인증"
         android:textColor="@color/black"
         android:textSize="8pt"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView9"
+        app:layout_constraintEnd_toStartOf="@+id/textView19"
         app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,48 +34,31 @@
         app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
 
-    <net.daum.mf.map.api.MapView
-        android:id="@+id/map_view"
+    <fragment
+        android:id="@+id/google_map"
+        class="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="330dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.144" />
-
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="208dp"
-        android:text="현재 위치는 "
-        android:textColor="@color/black"
-
-        android:textSize="9pt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view"
-        app:layout_constraintVertical_bias="0.687"></TextView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.236" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
-        android:text="현재 위치를 동네로 하시겠습니까?"
-        android:textColor="@color/black"
 
-        android:textSize="9pt"
+        android:text="현재 위치를 동네로 인증합니다"
+        android:textColor="@color/black"
+        android:textSize="8pt"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.283"
+        app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19"
-        app:layout_constraintVertical_bias="0.318"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/google_map"
+        app:layout_constraintVertical_bias="0.237"></TextView>
 
     <Button
         android:id="@+id/button4"
@@ -92,7 +75,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view"
+
+        app:layout_constraintTop_toBottomOf="@+id/google_map"
         app:layout_constraintVertical_bias="0.994" />
 
 

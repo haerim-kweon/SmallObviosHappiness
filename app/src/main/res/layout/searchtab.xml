@@ -1,34 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:ignore="MissingDefaultResource">
 
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="250dp"
-        android:layout_height="30dp"
-        android:layout_margin="15dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:orientation="horizontal"
-        android:tooltipText="검색어를 입력하세요"/>
+        >
+
+        <EditText
+            android:id="@+id/searchView3"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/white_button"
+            android:hint="검색어를 입력해주세요"
+            android:privateImeOptions="defaultInputmode=korean"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/imageButton21"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/searchView3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.625"
+            app:srcCompat="@drawable/ic_baseline_search_24" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <TextView
+        android:id="@+id/searchtab_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="최근 검색어"
+        android:layout_marginVertical="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="동네 근처 인기 공구"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="22sp" />
+        android:textSize="8pt" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/info_recyclerview1"
+        android:id="@+id/search_recyclerview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

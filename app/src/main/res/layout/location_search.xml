@@ -13,27 +13,27 @@
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
     <EditText
         android:id="@+id/searchView3"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:hint="동면(읍, 면)으로 검색"
+        android:privateImeOptions="defaultInputmode=korean"
+        android:textAlignment="center"
         app:iconifiedByDefault="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toEndOf="@+id/location_search_btn_back"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016"
-        android:hint="동면(읍, 면)으로 검색"
-        android:textAlignment="center"
-        android:privateImeOptions="defaultInputmode=korean"
-        android:drawableLeft="@drawable/ic_baseline_search_24"/>
+        app:layout_constraintVertical_bias="0.049" />
 
     <Button
         android:id="@+id/btn_location_search"
@@ -47,7 +47,7 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView3"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.035" />
 
     <TextView
         android:id="@+id/location_search_textview"
@@ -55,15 +55,14 @@
         android:layout_height="wrap_content"
         android:text="검색 결과"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="7pt"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_location_search"
-        app:layout_constraintVertical_bias="0.035">
-    </TextView>
+        app:layout_constraintVertical_bias="0.07"></TextView>
 
     <ListView
         android:id="@+id/listView"
@@ -77,5 +76,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_search_textview"
-        app:layout_constraintVertical_bias="0.0"></ListView>
+        app:layout_constraintVertical_bias="0.438"></ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>
