@@ -84,6 +84,7 @@ public class LocationSearchActivity extends AppCompatActivity {
 
                 JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
                 SharedPreferences pref = getSharedPreferences("jwt", 0);
+                Log.d("text", pref.getString("jwt", ""));
                 JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url + text, body,
                         new Response.Listener<JSONObject>() {
 
@@ -161,8 +162,8 @@ public class LocationSearchActivity extends AppCompatActivity {
 
                 String[] location_split = list.get(position).split(" ",4);
                 if (location_split.length == 4){
-                    location1 = location_split[0] + " " +location_split[1];
-                    location2 = location_split[2];
+                    location1 = location_split[0];
+                    location2 = location_split[1] + " " + location_split[2];
                     location3 = location_split[3];
                 }
                 else{
@@ -181,6 +182,8 @@ public class LocationSearchActivity extends AppCompatActivity {
 
                 JSONObject body2 = new JSONObject(); //JSON 오브젝트의 body 부분
                 SharedPreferences pref = getSharedPreferences("jwt", 0);
+                Log.d("text", pref.getString("jwt", ""));
+
                 JsonObjectRequest joRequest2 = new JsonObjectRequest(Request.Method.GET, url2+region1+region2+region3, body2,
                         new Response.Listener<JSONObject>() {
 

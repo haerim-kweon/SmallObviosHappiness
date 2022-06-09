@@ -116,7 +116,7 @@ public class Mypage_frag1 extends Fragment {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 element = (JSONObject) jsonArray.opt(i);
                                 Log.d("text?", element.toString());
-                                post_lists.add(new Post_List(element.getInt("postId"),element.getString("title"), element.getString("category")));
+                                post_lists.add(new Post_List(element.getInt("postId"),element.getString("title"), element.getString("category"), element.getString("imgUrl"), element.getInt("price")));
 
                             }
 

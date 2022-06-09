@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONException;
@@ -42,6 +44,8 @@ public class OtherProfileActivity extends AppCompatActivity {
     RequestQueue queue;
     TextView nick1, nick2, location;
     ImageButton btn_back;
+    ImageView profileImg;
+    String imgUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         frag1 = new OtherProfile_frag1();
         frag2 = new OtherProfile_frag2();
 
+        profileImg = findViewById(R.id.otherprofileimg);
 
         nick1 = findViewById(R.id.otherprofile_nick1);
         nick2 = findViewById(R.id.otherprofile_nick2);
@@ -93,6 +98,10 @@ public class OtherProfileActivity extends AppCompatActivity {
                             nick1.setText(result.getString("nick")+"의 소행성");
                             nick2.setText(result.getString("nick"));
                             location.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 10.0");
+
+                            imgUrl = result.getString("profileImg");
+                            Glide.with(getApplicationContext()).load(imgUrl).placeholder(R.drawable.ic_defalt_profile)
+                                    .error(R.drawable.ic_defalt_profile).into(profileImg);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,12 +38,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainTab extends Fragment {
+public class MainTab_Category extends Fragment {
 
     RecyclerView recyclerView;
     PostAdapter adapter;
@@ -59,7 +57,7 @@ public class MainTab extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.maintab, container, false);
+        View rootView = inflater.inflate(R.layout.maintab_category, container, false);
         notice = rootView.findViewById(R.id.gotonotice);
         queue = Volley.newRequestQueue(getContext());
 
@@ -202,15 +200,8 @@ public class MainTab extends Fragment {
             }
         });
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initUI(rootView);
-            }
-        },300);
+        initUI(rootView);
         return rootView;
-
-
     }
 
     public void initUI(View rootView){
@@ -262,6 +253,7 @@ public class MainTab extends Fragment {
 
     public void add_post(){
         post.clear();
+
         String url = "http://dev.sbch.shop:9000/app/posts?sort="+filterSelection+"&town=";//갈월동
         Log.d("text", "add_post URL : " + url + location_selection);
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분

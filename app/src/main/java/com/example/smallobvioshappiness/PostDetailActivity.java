@@ -17,9 +17,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONArray;
@@ -49,11 +52,14 @@ import java.util.Map;
 
 public class PostDetailActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, recommend_recyclerView;
+    Post_Small_Adapter post_small_adapter;
+    ArrayList<Post> post;
 
     CommentAdapter adapter;
     ArrayList<Comment> comments;
 
+    String imageUrl, user_imageUrl;
     RequestQueue queue;
     ImageButton btn_back, btn_interest, menu, btn_add_comment;
     Button btn_participation;
@@ -63,6 +69,7 @@ public class PostDetailActivity extends AppCompatActivity {
     ConstraintLayout profile;
     int postId;
     EditText edittext_comment;
+    ImageView imageView, user_image;
 
 
     @Override
@@ -95,6 +102,8 @@ public class PostDetailActivity extends AppCompatActivity {
         edittext_comment = findViewById(R.id.edittext_comment);
         btn_add_comment = findViewById(R.id.btn_add_comment);
 
+        imageView = findViewById(R.id.post_detail_imageView);
+        user_image = findViewById(R.id.imageView2);
         queue = Volley.newRequestQueue(getApplicationContext());
         String url = "http://dev.sbch.shop:9000/app/posts/";
 
@@ -112,7 +121,13 @@ public class PostDetailActivity extends AppCompatActivity {
                             title.setText(result.getString("title"));
                             category.setText(result.getString("category"));
                             createdAt.setText(result.getString("createdAt"));
-                            price.setText(String.valueOf(result.getInt("price"))+" 원");
+                            StringBuffer string_price = new StringBuffer(String.valueOf(result.getInt("price")));
+                            if(string_price.length()>3){
+                                string_price.insert(string_price.length()-3, ",");
+                            }
+
+                            price.setText(string_price+" 원");
+
                             userNick.setText(result.getString("nick"));
                             userLocation.setText(result.getString("town"));
                             contents.setText(result.getString("content"));
@@ -120,6 +135,17 @@ public class PostDetailActivity extends AppCompatActivity {
                             participant.setText(String.valueOf(result.getString("joinNum")+" / "+result.getString("num"))+"명");
                             //transactionStatus = result.getString("transactionStatus");
                             post_userId = result.getInt("userId");
+
+                            //이미지 띄우기
+                            imageUrl = result.getJSONArray("imgUrls").getString(0);
+                            user_imageUrl = result.getString("profileImg");
+
+                            Glide.with(getApplicationContext()).load(imageUrl).into(imageView);
+                            Glide.with(getApplicationContext()).load(user_imageUrl).circleCrop().into(user_image);
+
+
+
+
                             if(result.getInt("interestStatus")==1){
                                 btn_interest.setSelected(true);
                             }
@@ -694,15 +720,11 @@ public class PostDetailActivity extends AppCompatActivity {
                 Log.d("text", "댓글 조회");
                 //리사이클러뷰 생성
                 recyclerView = findViewById(R.id.comment_recyclerview);
-
                 //레이아웃매니저 설정
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(layoutManager);
-
-
                 //어댑터 생성, 아이템 추가
                 adapter = new CommentAdapter(comments);
-
                 //리사이클러뷰 연결
                 recyclerView.setAdapter(adapter);
 
@@ -710,6 +732,45 @@ public class PostDetailActivity extends AppCompatActivity {
         },500);
 
 
+        post = new ArrayList<>();
+        //post.add(new Post(0,"제목", "카테고리", 10000, "deal", 3, 3,"1분전",null));
+
+
+        add_recommend_post();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                //레이아웃매니저 설정
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+
+
+                //리사이클러뷰 생성
+                recyclerView = findViewById(R.id.post_detail_recyclerview);
+                recyclerView.setLayoutManager(layoutManager);
+                post_small_adapter = new Post_Small_Adapter(post);
+
+
+                //리사이클러뷰 연결
+                recyclerView.setAdapter(post_small_adapter);
+
+                post_small_adapter.setOnItemClicklistener(new OnSmallPostItemClickListener(){
+                    @Override
+                    public void onItemClick(Post_Small_Adapter.ItemViewHolder holder, View view, int position){
+                        Post item = post_small_adapter.getItem(position);
+
+                        int itempostid = item.getPostId();
+                        Intent intent = new Intent(getApplicationContext(), PostDetailActivity.class);
+                        intent.putExtra("postId", itempostid);
+
+                        startActivity(intent);
+
+                    }
+                });
+
+            }
+        },500);
 
 
     }
@@ -838,6 +899,83 @@ public class PostDetailActivity extends AppCompatActivity {
 
         };
         queue.add(joRequest);
+    }
+
+
+
+
+    //추천 리사이클러뷰
+
+
+    public void add_recommend_post(){
+        String url = "http://dev.sbch.shop:9000/app/posts/";
+        JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
+        SharedPreferences pref = this.getSharedPreferences("jwt",0);
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url+postId+"/recommend", body,
+                new Response.Listener<JSONObject>(){
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("text_adapter", "d");
+
+                            Log.d("text?", response.toString());
+
+                            JSONArray array = response.getJSONArray("result");
+                            Log.d("text", "result 길이 : "+String.valueOf(array.length()));
+
+                            JSONArray jsonArray = response.optJSONArray("result");
+
+                            JSONObject element;
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                element = (JSONObject) jsonArray.opt(i);
+                                Log.d("text?", element.toString());
+                                post.add(new Post(element.getInt("postId"), element.getString("title"), "", element.getInt("price"), "", 0, 0, "", element.getString("imgUrl")));
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse rep = error.networkResponse;
+                        if(error instanceof ServerError && rep != null){
+                            try{
+                                String r = new String(rep.data, HttpHeaderParser.parseCharset(rep.headers, "utf-8"));
+                                JSONObject jo = new JSONObject(r);
+                                Log.d("text", "결과"+jo.toString());
+                            }catch(UnsupportedEncodingException | JSONException e1){
+                                e1.printStackTrace();
+                            }
+                        }
+                        Log.d("text", "ERROR: "+error.getMessage());
+                    }
+                }
+        )
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json;charset=utf-8");
+                headers.put("X-ACCESS-TOKEN", pref.getString("jwt","") );
+                return headers;
+            }
+
+        };
+
+        queue.add(joRequest);
+
+
+
+
     }
 }
 

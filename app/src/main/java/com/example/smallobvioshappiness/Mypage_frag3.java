@@ -76,8 +76,8 @@ public class Mypage_frag3 extends Fragment {
                     @Override
                     public void onItemClick(Post_List_Adapter.ItemViewHolder holder, View view, int position){
                         Post_List item = adapter.getItem(position);
-
                         int itempostid = item.getId();
+                        //adapter.getItem(position).review
                         Intent intent = new Intent(getContext(), PostDetailActivity.class);
                         intent.putExtra("postId", itempostid);
 
@@ -116,7 +116,7 @@ public class Mypage_frag3 extends Fragment {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 element = (JSONObject) jsonArray.opt(i);
                                 Log.d("text?", element.toString());
-                                post_lists.add(new Post_List(element.getInt("postId"),element.getString("title"), element.getString("category")));
+                                post_lists.add(new Post_List(element.getInt("postId"),element.getString("title"), element.getString("category"), element.getString("imgUrl"), element.getInt("price")));
 
                             }
 

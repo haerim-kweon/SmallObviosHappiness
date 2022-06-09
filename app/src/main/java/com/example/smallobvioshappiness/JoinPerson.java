@@ -1,9 +1,18 @@
 package com.example.smallobvioshappiness;
 
 public class JoinPerson {
+    int postId;
     String name;
     int userId;
 //권선동
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
     public int getUserId() {
         return userId;
@@ -13,7 +22,8 @@ public class JoinPerson {
         this.userId = userId;
     }
 
-    public JoinPerson(String name, int userId) {
+    public JoinPerson(int postId, String name, int userId) {
+        this.postId = postId;
         this.name = name;
         this.userId = userId;
     }

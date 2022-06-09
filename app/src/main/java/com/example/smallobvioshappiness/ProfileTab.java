@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONException;
@@ -54,6 +56,9 @@ public class ProfileTab extends Fragment {
     int userid;
     private FragmentManager fm;
     private FragmentTransaction ft;
+    ImageView profileImg;
+    String imgUrl;
+
 
     @Nullable
     @Override
@@ -63,9 +68,11 @@ public class ProfileTab extends Fragment {
         notice_setting = new Notice_Setting();
         reviewpage = new ReviewPage();
 
+        profileImg = view.findViewById(R.id.myprofileImg);
+
         frag1 = new Mypage_frag1();
         frag2 = new Mypage_frag2();
-        frag3 = new Mypage_frag3();
+        frag3 = new Mypage_frag3();//신림동
 
         getFragmentManager().beginTransaction().replace(R.id.mypage_container, frag1).commit();
 
@@ -112,7 +119,9 @@ public class ProfileTab extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), LoginActivity.class);
+                getActivity().finish();
                 startActivity(intent);
+
 
             }
         });
@@ -134,6 +143,9 @@ public class ProfileTab extends Fragment {
                             nick.setText(result.getString("nick"));
                             score.setText("신뢰도 " +String.valueOf(result.getDouble("credibilityScore")) + " / 10.0");
 
+                            imgUrl = result.getString("profileImg");
+                            Glide.with(getContext()).load(imgUrl).placeholder(R.drawable.ic_defalt_profile)
+                                    .error(R.drawable.ic_defalt_profile).into(profileImg);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

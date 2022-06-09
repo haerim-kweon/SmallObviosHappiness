@@ -1,13 +1,11 @@
 package com.example.smallobvioshappiness;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,11 +14,11 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolder> {
+public class Post_Small_Adapter extends RecyclerView.Adapter<Post_Small_Adapter.ItemViewHolder> {
     private ArrayList<Post> posts;
-    private OnPostItemClickListener listener;
+    private OnSmallPostItemClickListener listener;
 
-    public PostAdapter(ArrayList<Post> posts) {
+    public Post_Small_Adapter(ArrayList<Post> posts) {
         this.posts = posts;
     }
 
@@ -33,7 +31,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.post, viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.post_small, viewGroup,false);
 
         return new ItemViewHolder(view);
     }
@@ -42,34 +40,17 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
         Post post = posts.get(i);
-        StringBuffer string_price = new StringBuffer(String.valueOf(post.getPrice()));
-        if(string_price.length()>3){
-            string_price.insert(string_price.length()-3, ",");
-        }
 
-        itemViewHolder.category.setText(post.getCategory());
         itemViewHolder.title.setText(post.getTitle());
-        itemViewHolder.time.setText(post.getCreatedAt());
-        itemViewHolder.price.setText(string_price+" 원");
-        itemViewHolder.interest_num.setText(String.valueOf(post.getInterest_num()));
-
         Glide.with(itemViewHolder.itemView.getContext()).load(post.getImgURL()).into(itemViewHolder.image);
 
-       // itemViewHolder.interest_state.set
-        if(post.getInterest_state()==1){
 
-        }
-        else {
-
-        }
-
-        //itemViewHolder.interest_state.setImageDrawable(post.getInterest_state());
 
 
     }
 
 
-    public void setOnItemClicklistener(OnPostItemClickListener listener){
+    public void setOnItemClicklistener(OnSmallPostItemClickListener listener){
         this.listener = listener;
     }
 
@@ -81,13 +62,9 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
-        private TextView category;
         private TextView title;
-        private TextView price;
-        private ImageButton interest_state;
-        private TextView interest_num;
-        private TextView time;
         private ImageView image;
+
 
 
 
@@ -95,14 +72,8 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ItemViewHolde
             super(itemView);
 
 
-            category = itemView.findViewById(R.id.postcategory);
-            title = itemView.findViewById(R.id.posttitle);
-            time = itemView.findViewById(R.id.posttime);
-            price = itemView.findViewById(R.id.postprice);
-            interest_state = itemView.findViewById(R.id.interest_state);
-            interest_num = itemView.findViewById(R.id.interest_num);
-            image = itemView.findViewById(R.id.post_image);
-
+            title = itemView.findViewById(R.id.post_samll_title);
+            image = itemView.findViewById(R.id.post_small_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

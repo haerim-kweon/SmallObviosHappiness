@@ -44,8 +44,8 @@ public class SearchTab extends Fragment {
 
 
     RecyclerView recyclerView;
-    Post_Small_Adapter adapter;
     PostAdapter postAdapter;
+    Post_Small_Adapter adapter;
     ArrayList<Post> post;
     RequestQueue queue;
     ImageButton btn_search;
@@ -99,7 +99,7 @@ public class SearchTab extends Fragment {
                         });
 
                     }
-                },1000);
+                },500);
 
 
 
@@ -160,10 +160,10 @@ public class SearchTab extends Fragment {
 
 
     public void add_post(){
-        String url = "http://dev.sbch.shop:9000/app/posts/";
+        String url = "http://dev.sbch.shop:9000/app/posts/recommend";
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
         SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
-        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url+15+"/recommend", body,
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url, body,
                 new Response.Listener<JSONObject>(){
 
                     @Override
@@ -297,13 +297,13 @@ public class SearchTab extends Fragment {
 
         };
 
-        queue.add(joRequest);
+        queue.add(joRequest);//레깅스
 
         //키워드 등록 자동
         String url2 = "http://dev.sbch.shop:9000/app/posts/keyword?word=";
         Log.d("text", url2 + word);
         JSONObject body2 = new JSONObject(); //JSON 오브젝트의 body 부분
-        JsonObjectRequest joRequest2 = new JsonObjectRequest(Request.Method.POST, url2+word, body2,
+        JsonObjectRequest joRequest2 = new JsonObjectRequest(Request.Method.GET, url2+word, body2,
                 new Response.Listener<JSONObject>(){//권선동
 
                     @Override

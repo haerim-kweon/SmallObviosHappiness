@@ -70,12 +70,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     int locationId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {//권선동
+        Log.d("text", "LocationActivity Start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_4);
         queue = Volley.newRequestQueue(getApplicationContext());
-        Intent intent0 = getIntent();
-        locationId = intent0.getIntExtra("locationId", 0);
+        Intent intent_this = getIntent();
+        locationId = intent_this.getIntExtra("locationId", 0);
 
         button = findViewById(R.id.button4);
         button.setOnClickListener(new View.OnClickListener() {
@@ -95,12 +96,16 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                                     Log.d("text_adapter", "d");
 
                                     Log.d("text?", response.toString());
-                                    JSONObject array = response.getJSONObject("result");
-                                    Log.d("text", "result 길이 : "+String.valueOf(array.length()));
-                                    if(response.getBoolean("isSuccess")){
+                                    JSONObject result = response.getJSONObject("result");
+                                    Log.d("text", "result 길이 : "+String.valueOf(result.length()));
+                                    if(result.getInt("certifyStatus") == 1){
                                         Toast.makeText(getApplicationContext(), "위치 인증에 성공했습니다", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                                         startActivity(intent);
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(), "현재 위치가 " + result.getString("town") + "이(가) 아닙니다.", Toast.LENGTH_SHORT).show();
+
                                     }
 
                                 } catch (JSONException e) {
@@ -160,7 +165,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-                Log.d("text??", "위도 : " + String.valueOf(latitude) + " 경도 : " + String.valueOf(longitude));
+                Log.d("text", "위도 : " + String.valueOf(latitude) + " 경도 : " + String.valueOf(longitude));
             }
             GPSListener gpsListener= new GPSListener();
             long minTime = 1000;
@@ -193,17 +198,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         this.googleMap = googleMap;
 
         locationCheck();
-        // 37.557667, 126.926546 홍대입구역
+
         LatLng latLng = new LatLng(latitude, longitude);
-        Log.d("text??", "위도 : " + String.valueOf(latitude) + " 경도 : " + String.valueOf(longitude));
+        Log.d("text", "위도 : " + String.valueOf(latitude) + " 경도 : " + String.valueOf(longitude));
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("현재 위치");
         googleMap.addMarker(markerOptions);
-
-
-
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             googleMap.setMyLocationEnabled(true);
@@ -212,9 +214,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
     }
-
-
-
 
 
 

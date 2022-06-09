@@ -3,10 +3,15 @@ package com.example.smallobvioshappiness;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -39,18 +44,23 @@ public class Post_List_Adapter extends RecyclerView.Adapter<Post_List_Adapter.It
 //        itemViewHolder.image.setImageDrawable(chatting.getImage());
         itemViewHolder.title.setText(list.getName());
         itemViewHolder.content.setText(list.getRecent_chat());
+        Glide.with(itemViewHolder.itemView.getContext()).load(list.getImgUrl()).into(itemViewHolder.image);
+        itemViewHolder.button.setText(String.valueOf(list.getPrice()));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
-       // private ImageView image;
+        private ImageView image;
         private TextView title;
         private TextView content;
+        private Button button;
 
         public ItemViewHolder(@NonNull View itemView){
             super(itemView);
          //   image = itemView.findViewById(R.id.imageView2);
             title = itemView.findViewById(R.id.postlist_title);
             content = itemView.findViewById(R.id.postlist_content);
+            image = itemView.findViewById(R.id.post_list_img);
+            button = itemView.findViewById(R.id.participant_button);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

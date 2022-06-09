@@ -1,12 +1,5 @@
 package com.example.smallobvioshappiness;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,8 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -38,103 +36,89 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JoinPeopleActivity extends AppCompatActivity {
-
-    RequestQueue queue;
-
+public class OtherProfile_frag2 extends Fragment {
     RecyclerView recyclerView;
-    JoinPersonAdapter adapter;
-    ArrayList<JoinPerson> person;
-    ImageButton btn_joinpeople_back;
-    String onlyjoin = "";
-
-
+    Post_List_Adapter adapter;
+    ArrayList<Post_List> post_lists;
+    RequestQueue queue;
+    int userid;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.otherprofile_frag2, container, false);
 
-        Log.d("text", "JoinPeoPleActivity_Start");
-        //Log.d("text", String.valueOf(postId));
+        Log.d("text", "Otherprofile_frag2 Start");
+        queue = Volley.newRequestQueue(getContext());
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.joinpeople);
+        initUI(rootView);
+        return rootView;
+    }
 
-        Intent intent = getIntent();
-        int postId = intent.getIntExtra("postId", 0);
-
-        //뒤로가기 버튼
-        btn_joinpeople_back = findViewById(R.id.btn_joinpeople_back);
-        btn_joinpeople_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-
-        person = new ArrayList<>();
-        add_person(postId);
-
-
-        //리사이클러뷰 생성
-        recyclerView = findViewById(R.id.join_people_recyclerview);
-
-        //리사이클러뷰 사이 구분선
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
-
-        //레이아웃매니저 설정
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
+    public void initUI(ViewGroup rootView) {
+        post_lists = new ArrayList<>();
+        add_post();
 
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run() { //리사이클러뷰 생성
+                recyclerView = rootView.findViewById(R.id.otherprofile_frag2_recyclerview);
+
+
+                //리사이클러뷰 사이 구분선
+                recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+                //레이아웃매니저 설정
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                recyclerView.setLayoutManager(layoutManager);
 
                 //어댑터 생성, 아이템 추가
-                adapter = new JoinPersonAdapter(person);
-                adapter.setOnItemClicklistener(new OnJoinPersonClickListener() {
+                adapter = new Post_List_Adapter(post_lists);
+                adapter.setOnItemClicklistener(new OnPostListItemClickListener(){
                     @Override
-                    public void onItemClick(JoinPersonAdapter.ItemViewHolder holder, View view, int position) {
-                        JoinPerson item = adapter.getItem(position);
-                        int otherId = item.getUserId();
-                        Intent intent = new Intent(getApplicationContext(), OtherProfileActivity.class);
-                        intent.putExtra("postUserId", otherId);
-                        startActivity(intent);
-                    }
-                });
+                    public void onItemClick(Post_List_Adapter.ItemViewHolder holder, View view, int position){
+                        Post_List item = adapter.getItem(position);
 
+                        int itempostid = item.getId();
+                        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+                        intent.putExtra("postId", itempostid);
+
+                        startActivity(intent);
+
+                    }
+
+                });
                 //리사이클러뷰 연결
                 recyclerView.setAdapter(adapter);
 
-            }
-        },500);
 
+            }
+        },300);
     }
 
-
-    public void add_person(int postId){
-
-        queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dev.sbch.shop:9000/app/posts/joinlist/";
+    public void add_post(){
+        String url = "http://dev.sbch.shop:9000/app/users/host/";
         JSONObject body = new JSONObject(); //JSON 오브젝트의 body 부분
+        SharedPreferences pref = this.getActivity().getSharedPreferences("jwt",0);
+        userid = getArguments().getInt("postUserId");
 
-        SharedPreferences pref = getSharedPreferences("jwt",0);
-        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url+postId+"?onlyJoin="+onlyjoin, body,
+
+        JsonObjectRequest joRequest = new JsonObjectRequest(Request.Method.GET, url+userid, body,
                 new Response.Listener<JSONObject>(){
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("text", "adapter");
-                            Log.d("text", response.toString());
+
                             JSONArray array = response.getJSONArray("result");
                             Log.d("text", "result 길이 : "+String.valueOf(array.length()));
 
                             JSONArray jsonArray = response.optJSONArray("result");
+
                             JSONObject element;
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 element = (JSONObject) jsonArray.opt(i);
-                                person.add(new JoinPerson(postId, element.getString("nick"), element.getInt("userId")));
+                                Log.d("text?", element.toString());
+                                post_lists.add(new Post_List(element.getInt("postId"),element.getString("title"), element.getString("category"), element.getString("imgUrl"), element.getInt("price")));
 
                             }
 
@@ -180,6 +164,4 @@ public class JoinPeopleActivity extends AppCompatActivity {
 
 
     }
-
-
 }
